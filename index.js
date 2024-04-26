@@ -11,6 +11,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import { validateRegister, validateLogin } from "./utils/validator.js";
+import env from "dotenv"
 
 // axios.get("https://iot-admin.meseeagro.com/plant_big_data/api/v1/search?plant_name=辣椒")
 //  .then(res=> res.data)
@@ -20,13 +21,14 @@ import { validateRegister, validateLogin } from "./utils/validator.js";
 const app = express();
 const port = 3000;
 const saltRounds = 10;
+env.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.use(
   session({
-    secret: "TOP",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
@@ -36,11 +38,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "world",
-  password: "rorana123",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORLD,
+  port: process.env.DB_PORT,
 });
 db.connect();
 const db2 = new pg.Client({
