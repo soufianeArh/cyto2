@@ -22,4 +22,17 @@ export function validateRegister(data){
   !errors.passwordError && password !== confirm ? errors.confirmError="confiremed password doesnt match" : ""
   !errors.password && password !== confirm ? errCount++ : ""
      return {errCount, errors}
-} 
+};
+
+export function validateLogin(data){
+   const { username, password } = data;
+   const errors={ usernameError:null, passwordError:null};
+   let errCount = 0;
+
+   username==="" ? errors.usernameError="username is required" : "";
+   username==="" ? errCount++ : "";
+   password==="" ? errors.passwordError="password is required" : "";
+   password==="" ? errCount++: "";
+
+   return {errCount, errors}
+};
