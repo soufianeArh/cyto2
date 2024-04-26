@@ -1,22 +1,16 @@
-
+const errorAlert = document.getElementById("error-id");
 const logoutBtn = document.getElementById("logout-btn")
 
 const colaLayout = document.getElementById("cola-layout");
-const concentricLayout = document.getElementById("concentric-layout");
-// const gridLayout = document.getElementById("grid-layout");
-const breadLayout = document.getElementById("bread-layout");
-const ciseLayout = document.getElementById("cise-layout");
-// const d3ForceLayout = document.getElementById("d3Force-layout");
-// const bilkentLayout = document.getElementById("bilkent-layout");
-const dagreLayout = document.getElementById("dagre-layout");
-// const avsdfLayout = document.getElementById("avsdf-layout");
 const klayLayout = document.getElementById("klay-layout");
+const tidytreeLayout= document.getElementById("tidytree-layout");
 // const ngraphLayout = document.getElementById("ngraph-layout");
 // const spreadLayout = document.getElementById("spread-layout");
 // const springyLayout = document.getElementById("springy-layout");
-const tidytreeLayout= document.getElementById("tidytree-layout");
-
-const errorAlert = document.getElementById("error-id");
+// const gridLayout = document.getElementById("grid-layout");
+// const d3ForceLayout = document.getElementById("d3Force-layout");
+// const bilkentLayout = document.getElementById("bilkent-layout");
+// const avsdfLayout = document.getElementById("avsdf-layout");
 
 //name seatch
 const headerInput2 = document.getElementById("header-search-input2");
