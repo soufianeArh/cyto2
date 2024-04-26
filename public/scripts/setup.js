@@ -121,20 +121,20 @@ nodesOthers.category,
 });
 
 function addFlag(category, color) {
-      cy.nodeHtmlLabel([
-        {
-          query: `#${category}`,
-          valign: "center",
-          halign: "center",
-          valignBox: "center",
-          halignBox: "center",
-          backgroundColor: "blue",
-          tpl: function (data) {
-            return `<i class="fa-solid fa-flag" style="color:${color} ; font-size: 14px;"></i>`;
-          },
-        },
-      ]);
-    }
-    addFlag("fruits", "#761e50");
-    addFlag("vegetables", "#286d1d");
-    addFlag("others", "#cdb57e");
+  cy.nodeHtmlLabel([
+    {
+      query: `#${category}`,
+      valign: "center",
+      halign: "center",
+      valignBox: "center",
+      halignBox: "center",
+      backgroundColor: "blue",
+      tpl: function (data) {
+        return `<i class="fa-solid fa-flag" style="color:${color} ; font-size: 14px;"></i>`;
+      },
+    },
+  ]);
+}
+addFlag("fruits", "#761e50");
+addFlag("vegetables", "#286d1d");
+addFlag("others", "#cdb57e");

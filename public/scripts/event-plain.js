@@ -29,23 +29,29 @@ logoutBtn.addEventListener("click", () => {
 
     exportPNG.addEventListener("click", () => {
       let link = document.createElement("a");
-      link.href = cy.png();
+      link.href = cy.png({
+            bg: "#0F0F1C"
+      });
       link.download = "image_filename.png";
       link.click();
     });
     
-    exportPNG.addEventListener("click", () => {
+    exportJPG.addEventListener("click", () => {
       let link = document.createElement("a");
-      link.href = cy.jpg();
+      link.href = cy.jpg({
+            bg: "#0F0F1C"
+      });
       link.download = "image_filename.jpg";
       link.click();
     });
     
     exportJSON.addEventListener("click", () => {
       let link = document.createElement("a");
-      link.href = cy.json();
+      link.href = cy.json({
+            elements: cy.elements()
+      });
       link.download = "image_filename.json";
-      link.click();
+      link.click(true);
     });
     
     compassUp.addEventListener("click", () => {
