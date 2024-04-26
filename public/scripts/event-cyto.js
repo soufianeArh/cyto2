@@ -8,6 +8,8 @@
 ///////////////////change layout/////////////
 
 colaLayout.addEventListener("click", () => {
+  cy.nodes(`[type="linking"]`).remove()
+  cy.edges(`[type="linking"]`).remove();
   cy.add(linksNodes);
   cy.nodes().unlock();
   displayLayout = "cola";
