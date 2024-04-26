@@ -201,7 +201,7 @@ app.post("/login", async (req, res) => {
               res.render("login.ejs",{
                 usernameError:null,
                 username:req.body.username,
-                passwordError:"Incorrect",
+                passwordError:"密码错误",
                 password:""
               })
             }

@@ -29,9 +29,9 @@ export function validateLogin(data){
    const errors={ usernameError:null, passwordError:null};
    let errCount = 0;
 
-   username==="" ? errors.usernameError="username is required" : "";
+   username==="" ? errors.usernameError="用户名是必需的" : "";
    username==="" ? errCount++ : "";
-   password==="" ? errors.passwordError="password is required" : "";
+   password==="" ? errors.passwordError="密码是必需的" : "";
    password==="" ? errCount++: "";
 
    return {errCount, errors}
