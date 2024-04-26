@@ -54,7 +54,12 @@ function refreshLayout() {
   // })
   //   }
   else if (displayLayout === "klay") {
-    changeLayout({ name: "klay" });
+      cy.nodes().unlock();
+      changeLayout({
+            name: "klay",
+            klay: {},
+          });
+      cy.nodes().lock();
   } else if (displayLayout === "ngraph") {
     changeLayout({ name: "cytoscape-ngraph.forcelayout" });
   } else if (displayLayout === "d3-force") {
