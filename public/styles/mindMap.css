@@ -1,0 +1,24 @@
+/* styles.css */
+body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .mindmap-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .node {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .node-content {
+      font-weight: bold;
+    }
+    
+    .node-children {
+      margin-left: 20px;
+    }

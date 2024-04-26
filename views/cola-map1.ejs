@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js" integrity="sha512-RcuA+PEnJcg1caTn53YLhZ3bYVFXphzcPL1BjBoAwFiA3bErav+AndZz1xrqpAtv/8Waep2X+9zn8KWpwacUSA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="
+      https://cdn.jsdelivr.net/npm/cytoscape-node-html-label@1.2.2/dist/cytoscape-node-html-label.min.js
+      "></script>
+      <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.5.1/cytoscape-cola.min.js"></script>
+
+      <!-- <script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+      <script src="cytoscape-node-html-label.js"></script> -->
+     <!-- <script href="http://localhost:3000/node_modules/cytoscape-html-node/dist/main.bundle.js"></script> -->
+    
+    <!-- <script type="module">
+            import * as htmlNode  from "http://localhost:3000/cytoscape-html-node/dist/main.bundle.js"
+            window.htmlNode = htmlNode
+     </script> -->
+     <script>
+
+     </script>
+ 
+    <style>
+            main{
+              position: relative;
+                display: flex;
+                width:100vw;
+                height: 100vh;
+                /* color:beige */
+                color:#757576;
+            }
+            #cy {
+              width:  100%;
+              height:  100%;
+              display: block;
+            
+              background-color: rgb(15, 15, 28);
+            }
+           
+           
+            .header2-ctn{
+              display: flex;
+              position: absolute;
+              right:14rem
+                      }
+            i{
+              color:#757576;
+              padding: 0.3rem;
+            }
+            i:hover{
+              color:beige;
+            }
+           
+           
+            .cy-title__p1{
+              color:rgb(155, 164, 155)
+            }
+            .cy-title__p2{
+              color:beige
+            }
+           
+          .footer-ctn{
+             position:absolute;
+             bottom:2rem;
+             right:1rem;
+             left:1rem;
+             
+             display:flex ;
+             justify-content: center;
+             /* flex-direction: row-reverse; */
+          }
+          #center-btn:hover .hover-footer-text {
+              display: block;
+            }
+            #export-btn:hover .hover-footer-export {
+              display: block;
+              left:-55%;
+              right:-55%;
+              display: flex;
+              flex-direction: column;
+            }
+            #center-btn:hover i{
+              color: beige
+            }
+            #export-btn:hover i{
+              color: beige
+            }
+            #compass-btn:hover i.fa-compass{
+              color: beige
+            }
+            #compass-btn:hover .hover-footer-compass {
+              display: block;
+              width:6rem;
+              height: 6rem;
+              left:-55%;
+              right:-55%;
+            }
+            .hover-footer-export div:hover {
+             color: white;
+            }
+            .hover-footer-compass div i:hover{
+              color: beige
+            };
+            .hover-footer-compass #compass-up{
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              top: 0;
+              right: 0;
+              left:0;
+              font-size: 6rem;
+            }
+            .hover-footer-compass #compass-down{
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              bottom: 0;
+              right: 0;
+              left:0
+            }
+            .hover-footer-compass #compass-left{
+              position: absolute;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              top: 0;
+              bottom: 0;
+              left:0
+            }
+            .hover-footer-compass #compass-right{
+              position: absolute;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              top: 0;
+              right: 0;
+              bottom:0
+            }
+          .hover-footer-ctn{
+            position: absolute;
+            bottom:3rem;
+            right:0;
+            left:0;
+
+            display:flex ;
+            justify-content: center;
+          }
+          .hover-footer{
+            position: absolute;
+            bottom:2rem;
+            padding: 0.3rem;
+            color:#757576;
+            display:none;
+            background-color:#2d3a45a0
+          }
+          .hover-footer-text{
+            left:-45%;
+            right:-45%;
+          };
+          .side-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            left:0;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color:#d0dbe5a0
+            /* background-color:#2d3a45a0 */
+          }
+          .side-ads-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            right:8rem;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .side-ads-popup .side-dim{
+              width: 500px;
+              height: 400px;
+              background-color:#d0dbe5a0;
+          }
+          .side-product-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            right:8rem;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .side-product-popup .side-dim{
+              width: 500px;
+              height: 400px;
+              background-color:#d0dbe5a0;
+          }
+          .hidden {
+  display: none !important;
+}; .focus{
+  color:beige !important;
+  font-weight: bold;
+}
+         /* .side-contact-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            right:8rem;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+          } */
+          .side-contact-popup .side-dim{
+              width: 300px;
+              height: 200px;
+          }
+          .side-contact-popup .side-dim .delete-bar{
+              background-color:#d0dbe5a0;
+          }
+          #mydiv {
+              position: absolute;
+              left: 30rem;
+              top:10rem;
+              z-index: 9;
+              background-color: #2d30468c;
+              border: 1px solid #d3d3d3;
+              text-align: center;
+            }
+            #mydivheader {
+              padding: 10px;
+              cursor: move;
+              z-index: 10;
+              background-color:#495065c4;
+              color: #fff;
+              position:relative
+            }
+            .drag-ctn{
+               padding: 0.4rem;
+               height: 16rem;
+               overflow-y: scroll;
+               max-width: 18rem;
+            }
+            .drag-ctn::-webkit-scrollbar {
+                display: none;
+            }
+
+          .drag-item{
+            display:flex;
+            align-items: center;
+
+          }
+          .drag-item span{
+            color: beige;
+          }
+          .compress{
+            position: absolute;
+            cursor: pointer;
+            top: .5rem;
+            right: .5rem;
+          }
+          .compress-remove{
+              position: absolute;
+              cursor: pointer;
+              top: .5rem;
+              left: .5rem;
+          }
+        
+            .header-item:hover i{
+              color: beige;
+              
+            }
+          .header2-ctn{
+              display: flex;
+              justify-content: flex-end;
+              position: absolute;
+              right:0;
+              left:0
+          }
+          .header-item2{
+              background-color: transparent;
+              border: 0.1rem solid #757576 !important;
+              color:#757576;
+              border-radius: 0.2rem;
+              margin: 0.2rem;
+              padding:0.2rem;
+              
+              display:flex
+            }
+            .header-item-user{
+               display:flex;
+               align-items: center;
+               background-color: #757576;
+               margin: 0.2rem;
+               border-radius: 3rem;
+            }
+            .header-item-user i {
+              color:#2d30468c;
+            }
+            .header-search{
+              display:flex;
+            }
+            .header-search input {
+              background: transparent !important;
+              color: beige;
+              border:none
+            }
+            .header-search button {
+              background: transparent !important;
+              border:none
+            }
+            .error-id{
+              position: absolute;
+              top:6rem;
+              right:0;
+              left:0;
+              display: flex;
+              justify-content:center;
+             
+            }
+            .error-id span{
+              background-color:beige;
+              color: rgb(48, 48, 49);
+              padding:0.2rem;
+            }
+            .error-id span i {
+              color: rgb(113, 36, 36);
+            };
+            #mydiv2 { 
+              position: absolute;
+              left: 0rem;
+              top:10rem;
+              z-index: 9;
+              background-color: #2d30468c;
+              border: 1px solid #d3d3d3;
+              text-align: center;
+            }
+            .mydiv2 { 
+              position: absolute;
+              left: 0rem;
+              top:10rem;
+              z-index: 9;
+              background-color: #2d30468c;
+              border: 1px solid #d3d3d3;
+              text-align: center;
+              display: flex;
+            }
+            #mydiv2header2 {
+              padding: 10px;
+              cursor: move;
+              z-index: 10;
+              background-color:#495065c4;
+              color: #fff;
+              position:relative
+            }
+            i#direction{
+              color: #7d7d81c4;
+            }
+            i#direction:hover{
+              color: #ececf0c4;
+            }
+            
+           
+            
+            .sidebar-ctn{
+               position:absolute;
+               top:0;
+               bottom:0;
+               right:1rem;
+              
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+            }
+            .header1-ctn{
+              position: absolute;
+              /* width: 100%; */
+              top: 0;
+              left: 0;
+              display:flex;
+              align-items: center;
+              z-index: 10;
+
+            }
+            #header-item-help:hover{
+              background-color: rgba(124, 124, 126, 0.595) !important;
+              color: beige !important;
+            }
+            .header-item{
+               cursor: pointer;
+              background-color: transparent;
+              /* color:rgb(214, 214, 143); */
+              color:#757576;
+              border: 0;
+              padding:4px 8px;
+              position:relative;
+              display:flex;
+              text-decoration: none;
+            }
+            .header-item:hover{
+              background-color: rgba(124, 124, 126, 0.595) !important;
+              color: beige !important;
+            }
+           #header-item .popup{
+            position: absolute;
+            display: none;
+            top: 2rem;
+            right:0%;
+            left:0%;
+            color:#808181;
+            /* display:none; */
+            background-color: rgba(124, 124, 126, 0.595) !important;
+           }
+           #header-item:hover .popup{
+            display: block;
+           }
+           .popup p:hover{
+            color:beige
+           }
+      </style>
+</head>
+<body>
+   
+      <main class="container">
+        <!-- <button id="btn">click me</button> -->
+        <div id="cy"></div>
+        <div class="header1-ctn ">
+
+              <a href="http://localhost:3000/cola-map" class="header-item">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>刷新图表</span>
+              </a>
+              <button id="header-item" class="header-item">
+                <i class="fa-solid fa-server"></i>
+                <span>服务器</span>
+                <div class="popup">
+                  <p>服务器-01</p>
+                  <p>服务器-02</p>
+                  <p>服务器-03</p>
+                  <p>服务器-04</p>
+                </div>
+              </button>
+              <button id="header-item" class="header-item">
+                  <i class="fa-solid fa-square-poll-vertical"></i>
+                  <span>统计数据</span>
+                  <div class="popup">
+                    <p>统计数据-01</p>
+                    <p>统计数据-02</p>
+                    <p>统计数据-03</p>
+                    <p>统计数据-04</p>
+                  </div>
+              </button>
+              <button id="header-item" class="header-item">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>设备</span>
+                <div class="popup">
+                  <p>设备-01</p>
+                  <p>设备-02</p>
+                  <p>设备-03</p>
+                  <p>设备-04</p>
+                </div>
+              </button>
+          </div>
+          <div class="header2-ctn">
+            <div class="header-search header-item2">
+              <input id="header-search-input" type="text" placeholder="品种搜索"/>
+              <button id="header-search-btn" class=""><i class="fa-brands fa-searchengin"></i></button>
+            </div>
+              <button class="header-item2">
+                <i class="fa-solid fa-video"></i>
+              </button>
+            <button class="header-item2">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <button class="header-item2">
+              <i class="fa-solid fa-cloud"></i>
+            </button>
+            <button class="header-item2">
+              <i class="fa-regular fa-circle-question"></i>
+            </button>
+            <button class="header-item-user">
+              <i class="fa-solid fa-user"></i>
+            </button>
+        </div>
+      </div>
+
+      <div class="sidebar-ctn">
+          <button id="side-ads" class="header-item">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>广告</span>
+          </button>
+          <button id="side-product" class="header-item">
+            <i class="fa-brands fa-product-hunt"></i>
+            <span>产品</span>
+          </button>
+          <button id="side-contact" class="header-item">
+            <i class="fa-solid fa-headset"></i>
+            <span>联系</span>
+          </button>
+      </div>
+      <div id="error-id" class="error-id hidden">
+        <span> <i class="fa-solid fa-circle-exclamation"></i>
+          您提供的信息不正确</span>
+      </div>
+      <div id="side-ads-popup" class="side-popup side-ads-popup hidden">
+        <div class="side-dim">
+          <div class="delete-bar"><i id="close-ads" class="fa-solid fa-rectangle-xmark"></i></div>
+          <!-- <iframe src="https://baike.baidu.com/item/%E7%89%A9%E8%81%94%E7%BD%91/7306589" width="100%" height="100%" frameborder="0"></iframe> -->
+        </div>
+      </div>
+      <div id="side-product-popup" class="side-popup side-ads-popup hidden">
+        <div class="side-dim">
+          <div class="delete-bar"><i id="close-product" class="fa-solid fa-rectangle-xmark"></i></div>
+          <!-- <iframe src="https://www.bing.com/images/search?q=drone&qs=n&form=QBIR&sp=-1&lq=0&pq=dro&sc=10-3&cvid=EB24BF58D4D2420BBFE274C0AAB49E62&ghsh=0&ghacc=0&first=1" width="100%" height="100%" frameborder="0"></iframe> -->
+        </div>
+      </div>
+     
+        <div id="side-contact-popup"  class="side-popup side-ads-popup side-contact-popup hidden ">
+          <div class="side-dim">
+          <div class="delete-bar" ><i id="close-contact" class="fa-solid fa-rectangle-xmark"></i></div>
+           <img width="100%" height="100%" src="http://localhost:3000/images/card2.png"/>
+          </div>
+        </div>
+      
+      <div id="mydiv" class="hidden">
+        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+        <div id="mydivheader">
+          <span>点击此处移动</span>
+          <div id="compress-btn" class=" compress">
+          <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+        </div>
+        <div id="compress-remove" class=" compress-remove">
+          <i id="close-compress" class="fa-solid fa-rectangle-xmark"></i>
+        </div>
+        </div>
+        <div id = "drag-ctn" class="drag-ctn">
+           
+        </div>
+      </div>
+      <div id="mydiv2" class="mydiv2">
+        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+       
+        <div id="mydiv2header2">
+          <i class="fa-solid fa-arrows-up-down-left-right"></i>
+      </div>
+      <div class="header-search header-item2">
+        <input id="header-search-input2" type="text" placeholder="品类搜索"/>
+        <button id="header-search-btn2" class=""><i class="fa-brands fa-searchengin"></i></button>
+      </div>
+      </div>
+
+      <div class="footer-ctn">
+            <button id="center-btn" class="header-item">
+              <i class="fa-solid fa-arrows-to-circle"></i>
+              <div class="hover-footer hover-footer-text">
+                将图表居中
+              </div>
+            </button>
+            <button id="export-btn" class="header-item">
+              <i class="fa-solid fa-download"></i>
+              <div class="hover-footer hover-footer-export">
+                <div id="export-png">PNG</div>
+                <div id="export-jpg">JPG</div>
+                <div id="export-json">JSON</div>
+              </div>
+            </button>
+            <button id="compass-btn" class="header-item">
+              <i class="fa-solid fa-compass"></i>
+              <div class="hover-footer hover-footer-compass">
+                <div id="compass-up"><i id="direction" class="fa-solid fa-up-long"></i></div>
+                <div id="compass-down"><i id="direction" class="fa-solid fa-down-long"></i></div>
+                <div id="compass-left"><i id="direction" class="fa-solid fa-left-long"></i></div>
+                <div id="compass-right"><i id="direction" class="fa-solid fa-right-long"></i></div>
+              </div>
+            </button>
+      </main>
+      <script >
+         var nodes1 =JSON.parse(`<%-JSON.stringify(nodes1)%>`);
+
+         console.log(nodes1)
+        // let nodes1 = [  {data:{id:"center1", }, classes: 'category'}]
+        let nodes2 = [  {data:{id:"center2", }, classes: 'category'}]
+        let nodes3 = [  {data:{id:"center3", }, classes: 'category'}]
+        let nodes4 = [  {data:{id:"center4", }, classes: 'category'}]
+        let nodes5 = [  {data:{id:"center5", }, classes: 'category'}]
+
+        // for(let i = 0; i < 100; i++){
+        //   nodes1.push(  {data:{id:`a${i}`, name:'',edgeId:`ae${i}`,}, classes: 'sub1' });
+        //   nodes1.push(  {data:{id:`ae${i}`, source:"center1", target:`a${i}`}})
+        // }
+
+        for(let i = 0; i <15; i++){
+          nodes2.push(  {data:{id:`b${i}`,  content:`类别b${i}`, edgeId:`be${i}` }, classes: 'sub2' });
+          nodes2.push(  {data:{id:`be${i}`, source:"center2", target:`b${i}`}})
+
+         
+        }
+        for(let i = 0; i <20; i++){
+          nodes3.push(  {data:{id:`c${i}`, content:`类别c${i}`, edgeId:`ce${i}`  }, classes: 'sub3' });
+          nodes3.push(  {data:{id:`ce${i}`, source:"center3", target:`c${i}`}})
+        }
+        for(let i = 0; i <20; i++){
+          nodes4.push(  {data:{id:`d${i}`, content:`类别d${i}`, edgeId:`de${i}`  }, classes: 'sub4' });
+          nodes4.push(  {data:{id:`de${i}`, source:"center4", target:`d${i}`}})
+        }
+        for(let i = 0; i <20; i++){
+          nodes5.push(  {data:{id:`e${i}`,  content:`类别b${i}`, edgeId:`ee${i}` }, classes: 'sub5' });
+          nodes5.push(  {data:{id:`ee${i}`, source:"center5", target:`e${i}`}})
+        }
+
+        var text = document.createElement('div');
+text.innerText = 'Hello World';
+            console.log(document.getElementById("cy"))
+
+            var cy = cytoscape({
+					container: document.getElementById('cy'),
+          wheelSensitivity: 0.3,
+          animate: true,
+          refresh: 1,
+          layout: {
+            name: 'cola',
+            maxSimulationTime:10000,
+            avoidOverlap: true, //edge though edge
+            convergenceThreshold: 0.01,
+            nodeSpacing: function( node ){ return 10; },
+           
+	    },
+          style: [
+  {
+    selector: 'node',
+    style: {
+      'color': 'black',//label
+      'background-color': '#FFF',//node
+      'label': 'data(info.variety)',
+      'font-size': '8px',
+      'width': '6px', // Set width of special nodes
+      'height': '6px',
+      cursor: 'pointer'
+    }
+  },
+  {
+    selector: '#box',
+    style: {
+      'shape': 'rectangle',
+      'color': 'white',
+       'text-wrap': 'wrap',
+      // 'background-color': '#0F0F1C',// color is same as canvas~bg
+      'background-color': '#f00',
+      'label': 'data(content)',
+      'width': '200px', // Set width of special nodes
+      'height': '200px',
+      'font-size': '16px',
+      // 'font-weight': 'bold',
+      'color': "beige",
+      // 'content': 'data(content)',
+      'text-valign': 'center',
+    }
+  },
+
+  {
+    selector: 'edge',
+    style: {
+      'line-color': ' #888',
+      // 'target-arrow-color': '#ccc',
+      // 'target-arrow-shape': 'triangle',
+      'curve-style': 'unbundled-bezier',
+      'target-arrow-width': 1 ,
+      'control-point-distance': 5,//curvy ratio
+      'width': '0.5px', // Set width of special nodes
+    }
+  },
+  {
+      selector: '.linkedge',
+      style: {
+        'width': '1px',
+        'control-point-distance': 20,//curvy ratio
+      }
+    },{
+      selector: '.category',
+      style: {
+        'background-color': 'green'
+      }
+    },
+    {
+      selector: '#parent1',
+      style: {
+        'background-color': 'blue'
+      }
+    },
+  {
+      selector: '#centere1',
+      style: {
+        length: 700,
+        "curve-style": 'unbundled-bezier',//curvy style
+        'control-point-distance': 10,//curvy ratio
+        'control-point-weight': 0.5//ratio of how much it will invade target
+      }
+    },
+    {
+      selector: '.orange',
+      style: {
+        'color': 'black',//label
+      'background-color': '#f60',//node
+      }
+    },
+    {
+      selector: '.litchi',
+      style: {
+        'color': 'black',//label
+      
+      
+      }
+    }
+],
+          elements:[
+          // { group: "nodes", data: { id: 'a11', name: 'a10',  }, classes: 'l1' },
+          // { data: { id: 'box',content:'Name: John\nAge: 30\n-------------\nName: Jane\nAge: 25',  } },
+          // { data: {id:"removeBox", content:"X", }},
+            ...nodes1,
+      
+            {data:{id:"linked2", source:"center1", target:"center2"}},
+            ...nodes2,
+            ...nodes3,
+            ...nodes4,
+            ...nodes5,
+            {data:{id:"link"}}, //linkinng center//
+            {data:{id:"linked1", source:"link", target:"center1"}, classes: 'linkedge'},
+            {data:{id:"linked3", source:"link", target:"center3"},  classes: 'linkedge'},
+            {data:{id:"linked4", source:"link", target:"center4"},  classes: 'linkedge'},
+            {data:{id:"linked5", source:"link", target:"center5"},  classes: 'linkedge'},
+          ]
+				});
+        cy.on('mouseover', 'node', function(event) {
+           event.target.style('cursor', 'pointer');
+  });
+
+  const compassUp = document.getElementById("compass-up");
+  const compassDown = document.getElementById("compass-down")
+  const compassLeft = document.getElementById("compass-left")
+  const compassRight = document.getElementById("compass-right")
+  compassUp.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX, y: currentY-20});
+  })
+  compassDown.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX, y: currentY+20});
+  })
+  compassLeft.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX-20, y: currentY});
+  })
+  compassRight.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX+20, y: currentY});
+  })
+
+  // Restore default cursor when mouse leaves the node
+  cy.on('mouseout', 'node', function(event) {
+    event.target.style('cursor', 'default');
+  });
+
+
+/////////////animate---start\\\\\\\\\\\\\\\
+
+
+        // cy.nodes().animate({'style': {'opacity': 0.2}}, {'duration': 2500}, {'easing': 'ease-in-cubic'}).delay(200).animate({'style': {'opacity': 0.6}}, {'duration' : 600}, {'easing': 'ease-in-cubic'}).animate({'style': {'opacity': 1}}, {'duration': 600}, {'easing': 'ease-in-cubic'});
+        cy.$("#b13")
+        // Function to shake a node
+  // function shakeNode(node) {
+  //   var duration = 1000; // Duration of the animation in milliseconds
+  //   var shakeDistance = 5; // Distance to shake in pixels
+  //   var steps = 10; // Number of steps for the animation
+    
+  //   var position = node.position();
+  //   console.log(position);
+    
+  //   // Define animation
+  //   var animation = {
+  //     duration: duration,
+  //     positions: []
+  //   };
+    
+  //   // Generate shake animation
+  //   for (var i = 0; i < steps; i++) {
+  //     var angle = Math.random() * Math.PI * 2; // Random angle
+  //     var dx = Math.cos(angle) * shakeDistance; // X offset
+  //     var dy = Math.sin(angle) * shakeDistance; // Y offset
+      
+  //     animation.positions.push({
+  //       x: position.x + dx,
+  //       y: position.y + dy
+  //     });
+  //   }
+    
+  //   // Play the animation
+  //   node.animate({
+  //     position: animation,
+  //   }, {
+  //     duration: duration,
+  //     easing: 'ease-out'
+  //   });
+  // }
+
+  // Shake node with id 'b13' when the page loads
+  // var nodeToShake = cy.$('#b13');
+  // shakeNode(nodeToShake);
+
+
+
+
+
+/////////animation---end/////////
+          cy.nodes(".sub1").filter(function(ele) {
+          return ele.data("info").name === '芒果';
+          }).addClass('mango')
+          cy.nodes(".sub1").filter(function(ele) {
+          return ele.data("info").name === '荔枝';
+          }).addClass('litchi')
+          cy.nodes(".sub1").filter(function(ele) {
+          return ele.data("info").name === '火龙果';
+          }).addClass('pitaya')
+          cy.nodes(".sub1").filter(function(ele) {
+          return ele.data("info").name === '香蕉';
+          }).addClass('banana')
+          cy.nodes(".sub1").filter(function(ele) {
+          return ele.data("info").name === '榴莲';
+          }).addClass('durian')
+          cy.nodes(".sub1").filter(function(ele) {
+          return ele.data("info").name === '木瓜';
+          }).addClass('papaya')
+        
+          // cy.elements('node[info.name = "芒果"]')
+
+        const headerInput = document.getElementById("header-search-input");
+        const headerSearch = document.getElementById("header-search-btn");
+        const errorAlert = document.getElementById("error-id");
+        headerSearch.addEventListener("click",()=>{
+          var clickedNode = cy.elements(`node[info.variety = "${headerInput.value}"]`)
+          console.log(clickedNode)
+          if(clickedNode.length === 1 ){
+            var otherNodes =cy.elements(`node[info.variety != "${headerInput.value}"]`)
+          var relativeEdge = cy.$(`#${ clickedNode.data().edgeId }`)
+          var otherEdges = cy.edges().filter((ele)=> ele.id() !== relativeEdge.id())
+          const clickedNodeFull = cy.$(`#${clickedNode.id()}`)
+          console.log(clickedNodeFull, "full")
+           clickedNode.style({
+            'background-color': '#FFF',
+            'color': '#FFF'
+           }) 
+           relativeEdge.style({
+              'line-color': '#0af',
+            })
+           otherNodes.style({
+            'background-color': '#888', //dark
+            'color': '#888', //dark
+           })
+           otherEdges.style({
+            'line-color': '#888',
+           })
+      
+           //append data from 
+           console.log(dragDiv.querySelector("#drag-ctn"))
+          dragDiv.querySelector("#drag-ctn").innerHTML = `
+          <div class="drag-item">
+            <i class="fa-solid fa-handshake"></i>
+            <p>ID: ${clickedNode.id()}描述</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-certificate"></i>
+            <p>类别:${clickedNode.data().info.category} </p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-helmet-safety"></i>
+            <p>大类: ${clickedNode.data().info.sub_category}</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-server"></i>
+            <p>品类:  ${clickedNode.data().info.name}</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-server"></i>
+            <p>品种:  ${clickedNode.data().info.variety}</p>
+          </div>
+       
+          <ul>
+              <li>操作系统：Ubuntu服务器20.04 LTS</li>
+              <li>IP地址：192.168.1.100</li>
+              <li>处理器：Intel Xeon E5-2620 v4（8 核）</li>
+              <li>RAM: 16 GB DDR4</li>
+            </ul>
+
+          `
+               //show dragable in case hidden
+               dragDiv.classList.remove("hidden")
+          }
+          else{
+            errorAlert.classList.remove("hidden")
+            setTimeout(() => {
+              errorAlert.classList.add("hidden")
+            }, 1000);
+          }
+        })
+        const headerInput2 = document.getElementById("header-search-input2");
+        const headerSearch2 = document.getElementById("header-search-btn2");
+        // const errorAlert = document.getElementById("error-id");
+        
+         
+        
+        headerSearch2.addEventListener("click",()=>{
+         
+          var clickedNode = cy.elements(`node[info.name = "${headerInput2.value}"]`)
+          // console.log(clickedNode.length, clickedNode)
+          if(clickedNode.length >= 1 && clickedNode.length != cy.nodes().length ){
+            var otherNodes = cy.elements(`node[info.name != "${headerInput2.value}"]`)
+          // var relativeEdges = cy.$(`#a2,#a15, #a30, #a40, #a50`)
+          var relativeEdges = [];
+          for (let i=0; i<clickedNode.length; i++){
+             relativeEdges[i] = cy.$(`#${ clickedNode[i].data().edgeId }`)
+          };
+
+          //  var otherEdges = [];
+          //  for (let i=0; i<clickedNode.length; i++){
+          //    otherEdges[i] =  cy.edges().filter((ele)=> ele.id() !== clickedNode[i].data().edgeId)
+          // };
+        
+           clickedNode.style({ 
+            'background-color': '#FFF',
+            'color': '#FFF'
+           }) 
+           relativeEdges.forEach(edge=>{
+           edge.style({
+              'line-color': '#0af',
+            })
+           })
+           
+           otherNodes.style({
+            'background-color': '#888', //dark
+            'color': '#888', //dark
+           })
+          //  otherEdges.style({
+          //   'line-color': '#888',
+          //  })
+      
+           //append data from 
+           console.log(dragDiv.querySelector("#drag-ctn"))
+          dragDiv.querySelector("#drag-ctn").innerHTML = `
+          <div class="drag-item">
+            <i class="fa-solid fa-handshake"></i>
+            <p>欢迎来到${clickedNode.info.name}描述</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-certificate"></i>
+            <p>(S</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-helmet-safety"></i>
+            <p>${clickedNode.id()} 灾难恢复规划和备份工具（例如，rsync、Bacula、Veeam）</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-server"></i>
+            <p>服务器名称：fuck meeee</p>
+          </div>
+          <ul>
+              <li>操作系统：Ubuntu服务器20.04 LTS</li>
+              <li>IP地址：192.168.1.100</li>
+              <li>处理器：Intel Xeon E5-2620 v4（8 核）</li>
+              <li>RAM: 16 GB DDR4</li>
+            </ul>
+        
+
+          `
+               //show dragable in case hidden
+               dragDiv.classList.remove("hidden")
+          }
+          else{
+            errorAlert.classList.remove("hidden")
+            setTimeout(() => {
+              errorAlert.classList.add("hidden")
+            }, 1000);
+          }
+        })
+
+       const dragDiv = document.getElementById("mydiv")
+        const removeCompress = document.getElementById("compress-remove");
+        removeCompress.addEventListener("click",()=>{
+          dragDiv.classList.add('hidden');
+        })
+        const compressBrn = document.getElementById("compress-btn")
+        compressBrn.addEventListener("click",()=>{
+          const dragCtn = document.getElementById("drag-ctn").style
+          console.log(dragCtn.height)
+          if(dragCtn.height === "20rem"){
+            console.log("make it 16")
+            dragCtn.setProperty('height', '16rem', 'important');
+          }
+          if(dragCtn.height === "" ){
+            console.log("make it 20")
+            dragCtn.setProperty('height', '20rem', );
+          }if(dragCtn.height === "16rem"){
+            console.log("make it 20")
+            dragCtn.setProperty('height', '20rem', );
+          }
+           
+        })
+        const closeAds = document.getElementById("close-ads")
+        closeAds.addEventListener("click", ()=>{
+          document.getElementById("side-ads-popup").classList.add('hidden');
+        });
+        const adsBtn = document.getElementById("side-ads");
+        console.log(adsBtn);
+        adsBtn.addEventListener("click", ()=>{
+          document.getElementById("side-ads-popup").classList.remove('hidden');
+        })
+        const productBtn = document.getElementById("side-product");
+        const productPop = document.getElementById('side-product-popup');
+        const closeProduct = document.getElementById("close-product");
+        productBtn.addEventListener("click", ()=>{
+          productPop.classList.remove('hidden')
+        })
+        closeProduct.addEventListener("click", () =>{
+          productPop.classList.add('hidden')
+        })
+        const contactBtn = document.getElementById("side-contact");
+        const contactPop = document.getElementById('side-contact-popup');
+        const closecontact = document.getElementById("close-contact");
+        contactBtn.addEventListener("click", ()=>{
+          contactPop.classList.remove('hidden')
+        })
+        closecontact.addEventListener("click", () =>{
+          contactPop.classList.add('hidden')
+        })
+
+        console.log(productPop)
+        const centerBtn = document.getElementById("center-btn");
+        centerBtn.addEventListener("click",()=>{
+          cy.center()
+          cy.zoom(0.4)
+        });
+        const exportBtn = document.getElementById("export-btn");
+        exportBtn.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.png();
+          link.download = 'image_filename.jpg';
+          link.click();
+        })
+        const exportPNG = document.getElementById("export-png");
+        exportPNG.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.png();
+          link.download = 'image_filename.png';
+          link.click()
+        })
+        const exportJPG = document.getElementById("export-jpg");
+        exportPNG.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.jpg();
+          link.download = 'image_filename.jpg';
+          link.click()
+        })
+        const exportJSON = document.getElementById("export-json");
+        exportPNG.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.json();
+          link.download = 'image_filename.json';
+          link.click()
+        })
+        
+        cy.on('click', 'node', function(event){
+          var clickedNode = event.target;
+      
+          var otherNodes = cy.nodes().filter((ele)=>  ele.id() !== clickedNode.id())
+          var relativeEdge = cy.$(`#${ clickedNode.data().edgeId }`)
+          var otherEdges = cy.edges().filter((ele)=> ele.id() !== relativeEdge.id())
+           clickedNode.style({
+            'background-color': '#FFF',
+            'color': '#FFF'
+           });
+           relativeEdge.style({
+              'line-color': '#0af',
+            })
+           otherNodes.style({
+            'background-color': '#888', //dark
+            'color': '#888', //dark
+           })
+           otherEdges.style({
+            'line-color': '#888',
+           })
+      
+           //append data from 
+           console.log(dragDiv.querySelector("#drag-ctn"))
+          dragDiv.querySelector("#drag-ctn").innerHTML = `
+          <div class="drag-item">
+            <i class="fa-solid fa-handshake"></i>
+            <p>ID: ${clickedNode.id()}描述</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-certificate"></i>
+            <p>类别:${clickedNode.data().info.category} </p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-helmet-safety"></i>
+            <p>大类: ${clickedNode.data().info.sub_category}</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-server"></i>
+            <p>品类:  ${clickedNode.data().info.name}</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-server"></i>
+            <p>品种:  ${clickedNode.data().info.variety}</p>
+          </div>
+       
+          <ul>
+              <li>操作系统：Ubuntu服务器20.04 LTS</li>
+              <li>IP地址：192.168.1.100</li>
+              <li>处理器：Intel Xeon E5-2620 v4（8 核）</li>
+              <li>RAM: 16 GB DDR4</li>
+            </ul>
+
+          `
+               //show dragable in case hidden
+               dragDiv.classList.remove("hidden")
+
+            console.log('Node clicked:', clickedNode.id());
+          });
+        
+        // cy.on('free', 'node', function(event) {
+          
+        //   console.log(initialPositions["a5"]) //differet data
+        //     var node = event.target;
+        //     console.log(node.id());
+        //     // var initialPosition = initialPositions[node.id()];
+        //     var initialPosition = Object.assign({}, initialPositions[node.id()]);
+        //     node.position(initialPosition);
+        // });
+        cy.nodeHtmlLabel([
+        {query: '.mango',
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        
+        tpl: function(data) {
+              // return '<button class="cy-title__p1">' + "souf" + '</button>'
+             return '<img style="width: 10px; height:10px; margin:0; padding:0" src="/images/mango.png"/>'
+            // return `<p  class="cy-title__p2"> hello soufiane</p> <span class="cy-title__p2">bonjour</span>`;
+        }},
+        {query: '.litchi',
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        tpl: function(data) {
+             return '<img style="width: 10px; height:10px; margin:0; padding:0" src="/images/litchi.png"/>'
+        }},
+        {query: '.pitaya',
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        tpl: function(data) {
+             return '<img style="width: 10px; height:10px; margin:0; padding:0" src="/images/pitaya.png"/>'
+        }},
+        {query: '.banana',
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        tpl: function(data) {
+             return '<img style="width: 10px; height:10px; margin:0; padding:0" src="/images/banana.png"/>'
+        }},{query: '.durian',
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        tpl: function(data) {
+             return '<img style="width: 10px; height:10px; margin:0; padding:0" src="/images/durian.png"/>'
+        }},
+        {query: '.papaya',
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        tpl: function(data) {
+             return '<img style="width: 10px; height:10px; margin:0; padding:0" src="/images/papaya.png"/>'
+        }},
+        ]);
+// Make the DIV element draggable:
+dragElement(document.getElementById("mydiv"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+dragElement2(document.getElementById("mydiv2"));
+function dragElement2(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header2")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header2").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+
+
+       const box = cy.$("#box");
+       box.position({x:100,y:100})
+        console.log(cy.$("#linked1").json())
+        console.log(cy.$("#linked4").json())
+        console.log(cy.$("#linked5").json())
+        // var node = cy.getElementById('box');
+        // var text = document.createElement('div');
+        // text.innerText = 'Hello World';
+        // text.style.position = 'absolute';
+        // text.style.top = '50%';
+        // text.style.left = '50%';
+        // text.style.transform = 'translate(-50%, -50%)'; // Center the text
+        // node.appendChild(text);
+
+        // cy.zoom(1);
+      
+       cy.on("zoom", (e)=>{
+        // console.log(cy.zoom())
+        if(cy.zoom() > 0.4){
+          cy.nodes().style('color', 'white');
+        }else{
+          cy.nodes().style('color', 'black');
+        }
+        // console.log(cy.zoom())
+       });
+
+        var containerWidth = cy.container().clientWidth;
+        var containerHeight = cy.container().clientHeight;
+        const a = cy.$("#d");
+        console.log(a.hasClass("sub1"))
+        // const link = cy.$("#link");
+
+        const link = cy.$("#link");
+        link.position({x:0,y:-150})
+
+        const center1 = cy.$("#center1");
+        center1.position({x:-150, y:-100});
+        
+         const center2 = cy.$("#center2");
+        center2.position({x:-400, y:-90});
+
+         const center3 = cy.$("#center3");
+        center3.position({x:100, y:-250});
+
+        const center4 = cy.$("#center4");
+        center4.position({x:130, y:-100});
+
+        const center5 = cy.$("#center5");
+        center5.position({x:100, y:50});
+
+         var children1 = cy.nodes().filter(function(node){
+             return node.hasClass('sub1');
+         });
+        var numChildren = children1.length;
+        var angleStep = (2 * Math.PI) / numChildren;
+        var centerX = center1.position().x; // Get x-coordinate of parent node
+          var centerY = center1.position().y
+          var radiusValues = [90, 100,70, 90, 100,80, 60,50];
+          var radiusIndex1 = 0;
+        children1.forEach(function(child, index) {
+          var angle = angleStep * index; // Calculate angle for this child
+          var radius = radiusValues[radiusIndex1 % radiusValues.length];
+          var x = centerX + radius * Math.cos(angle); // Calculate x-coordinate based on angle and radius
+          var y = centerY + radius * Math.sin(angle); // Calculate y-coordinate based on angle and radius
+          child.position({ x: x, y: y }); // Set position of child node
+          radiusIndex1++;
+        });
+
+        var children2 = cy.nodes().filter(function(node){
+             return node.hasClass('sub2');
+         });
+         var numChildren = children2.length;
+        var angleStep = (2 * Math.PI) / numChildren;
+        var centerX = center2.position().x; // Get x-coordinate of parent node
+          var centerY = center2.position().y
+          var radiusValues = [40, 50, 60];
+          var radiusIndex2 = 0;
+        children2.forEach(function(child, index) {
+          var angle = angleStep * index; // Calculate angle for this child
+          var radius = radiusValues[radiusIndex2 % radiusValues.length];
+          var x = centerX + radius * Math.cos(angle); // Calculate x-coordinate based on angle and radius
+          var y = centerY + radius * Math.sin(angle); // Calculate y-coordinate based on angle and radius
+          child.position({ x: x, y: y }); // Set position of child node
+         
+          radiusIndex2++;
+        });
+
+         var children3 = cy.nodes().filter(function(node){
+             return node.hasClass('sub3');
+         });
+         var numChildren = children3.length;
+        var angleStep = (2 * Math.PI) / numChildren;
+        var centerX = center3.position().x; // Get x-coordinate of parent node
+          var centerY = center3.position().y
+          var radiusValues = [30, 40, 50];
+          var radiusIndex3 = 0;
+        children3.forEach(function(child, index) {
+          var angle = angleStep * index; // Calculate angle for this child
+          var radius = radiusValues[radiusIndex3 % radiusValues.length];
+          var x = centerX + radius * Math.cos(angle); // Calculate x-coordinate based on angle and radius
+          var y = centerY + radius * Math.sin(angle); // Calculate y-coordinate based on angle and radius
+          child.position({ x: x, y: y }); // Set position of child node
+       
+          radiusIndex3++;
+        });
+
+        var children4 = cy.nodes().filter(function(node){
+             return node.hasClass('sub4');
+         });
+         var numChildren = children4.length;
+        var angleStep = (2 * Math.PI) / numChildren;
+        var centerX = center4.position().x; // Get x-coordinate of parent node
+          var centerY = center4.position().y
+          var radiusValues = [30, 40, 50];
+          var radiusIndex4 = 0;
+        children4.forEach(function(child, index) {
+          var angle = angleStep * index; // Calculate angle for this child
+          var radius = radiusValues[radiusIndex4 % radiusValues.length];
+          var x = centerX + radius * Math.cos(angle); // Calculate x-coordinate based on angle and radius
+          var y = centerY + radius * Math.sin(angle); // Calculate y-coordinate based on angle and radius
+          child.position({ x: x, y: y }); // Set position of child node
+       
+          radiusIndex4++;
+        });
+
+        var children5 = cy.nodes().filter(function(node){
+             return node.hasClass('sub5');
+         });
+         var numChildren = children5.length;
+        var angleStep = (2 * Math.PI) / numChildren;
+        var centerX = center5.position().x; // Get x-coordinate of parent node
+          var centerY = center5.position().y
+          var radiusValues = [30, 40, 50];
+          var radiusIndex5 = 0;
+        children5.forEach(function(child, index) {
+          var angle = angleStep * index; // Calculate angle for this child
+          var radius = radiusValues[radiusIndex3 % radiusValues.length];
+          var x = centerX + radius * Math.cos(angle); // Calculate x-coordinate based on angle and radius
+          var y = centerY + radius * Math.sin(angle); // Calculate y-coordinate based on angle and radius
+          child.position({ x: x, y: y }); // Set position of child node
+      
+          radiusIndex5++;
+        });
+
+
+        // Store initial positions of nodes
+        const initialPositions = {};
+        children1.forEach(function(node) {
+          initialPositions[node.id()] = node.position();
+        });
+        console.log(initialPositions["a5"]) // data
+
+        
+
+      const btn = document.getElementById("btn")
+      btn.addEventListener("click",()=>{
+      })
+      </script>
+</body>
+</html>

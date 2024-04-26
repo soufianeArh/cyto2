@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js" integrity="sha512-RcuA+PEnJcg1caTn53YLhZ3bYVFXphzcPL1BjBoAwFiA3bErav+AndZz1xrqpAtv/8Waep2X+9zn8KWpwacUSA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <style>
+            #cy {
+              width: 400px;
+              height: 400px;
+              display: block;
+              background-color: rgb(115, 115, 128);
+              width:100%
+            }
+      </style>
+</head>
+<body>
+      <button id="btn">click me</button>
+      <div id="cy"></div>
+      <script >
+            console.log(document.getElementById("cy"))
+            var cy = cytoscape({
+					container: document.getElementById('cy'),
+
+					layout: {
+            name: 'cose',
+            randomize: false, // Use preset layout for manual positioning
+    fit: true, // Do not fit to viewport
+    padding: 10, // Adjust as needed
+    // positions: function(node) {
+    //     if (node.id() === 'parent') {
+    //       return { x: 10, y: 10 };
+    //     } else if (node.id() === 'parent2') {
+    //       return { x: 30, y: 10 };
+    //     } else if (node.id() === 'parent3') {
+    //       return { x: 10, y: 30 };
+    //     } else if (node.id() === 'parent4') {
+    //       return { x: 30, y: 30 };
+    //     }
+    //   },
+            boundingBox: { // Set a bounding box to limit layout area
+                x1: 0, // min x
+                y1: 0, // min y
+                x2: 800, // max x
+                y2: 900 // max y
+            },
+             avoidOverlap: true,
+            // spacingFactor: 20,
+            //  nodeOverlap: 100,
+            // idealEdgeLength: 100,
+            // padding: 0,
+            // minNodeSpacing: 100,
+            // componentSpacing: 100,
+            
+              
+					},
+
+          style: [ // the stylesheet for the graph
+  {
+    selector: 'node',
+    style: {
+      'background-color': '#666',
+      'label': 'data(id)'
+    }
+  },
+
+  {
+    selector: 'edge',
+    style: {
+      'width': 3,
+      'line-color': '#F00',
+      'target-arrow-color': '#ccc',
+      'target-arrow-shape': 'triangle',
+      'curve-style': 'bezier'
+    }
+  },{
+      selector: '.category',
+      style: {
+        // Style for selected nodes
+        'background-color': 'green'
+      }
+    },
+    {
+      selector: '#parent1',
+      style: {
+        // Style for selected nodes
+        'background-color': 'blue'
+      }
+    },
+  {
+      selector: '#centere1',
+      style: {
+        length: 700,
+        "curve-style": 'unbundled-bezier',//curvy style
+        'control-point-distance': 10,//curvy ratio
+        'control-point-weight': 0.5//ratio of how much it will invade target
+      }
+    }
+],
+          elements: [
+             {data:{id:"a", parent:"parent1" }, classes: 'sub' }, //first circle
+             {data:{id:"b", parent:"parent1"  }},
+             {data:{id:"c",  parent:"parent1"  }},
+             {data:{id:"d", parent:"parent1"  }},
+             {data:{id:"e", parent:"parent1" }},
+             {data:{id:"f", parent:"parent1" }},
+             {data:{id:"g", parent:"parent1"  }},
+             {data:{id:"h", parent:"parent1" }},
+             {data:{id:"i", parent:"parent1" }},
+            {data:{id:"center", parent:"parent1"}, classes: 'category'}, //center
+            {data:{id:"parent1"}, },//[parent]
+            //  {data:{id:"a",  }, classes: 'sub' }, //first circle
+            //  {data:{id:"b",   }},
+            //  {data:{id:"c",    }},
+            //  {data:{id:"d",   }},
+            //  {data:{id:"e",  }},
+            //  {data:{id:"f",  }},
+            //  {data:{id:"g",   }},
+            //  {data:{id:"h",  }},
+            //  {data:{id:"i",  }},
+            //  {data:{id:"center",}, classes: 'category'},
+            //  {data:{id:"centere1", source:"center", target:"center1"}},
+              {data:{id:"ae", source:"center", target:"a"}},
+             {data:{id:"be", source:"center", target:"b"}},
+             {data:{id:"ce", source:"center", target:"c"}},
+             {data:{id:"de", source:"center", target:"d"}},
+             {data:{id:"ee", source:"center", target:"e"}},
+             {data:{id:"fe", source:"center", target:"f"}},
+             {data:{id:"ge", source:"center", target:"g"}},
+             {data:{id:"he", source:"center", target:"h"}},
+             {data:{id:"ie", source:"center", target:"i"}},
+
+            
+             {data:{id:"a1", parent:"parent2"}}, //second circle
+             {data:{id:"b1", parent:"parent2"}},
+             {data:{id:"c1", parent:"parent2"}},
+             {data:{id:"d1", parent:"parent2"}},
+             {data:{id:"e1", parent:"parent2"}},
+             {data:{id:"f1", parent:"parent2"}},
+             {data:{id:"center1", parent:"parent2"}, classes:"category"},//center
+             {data:{id:"parent2"}, },//parent
+           //  {data:{id:"centere1", source:"center1", target:"center"}},//link centter
+             {data:{id:"ae1", source:"center1", target:"a1"}},
+             {data:{id:"be1", source:"center1", target:"b1"}},
+             {data:{id:"ce1", source:"center1", target:"c1"}},
+             {data:{id:"de1", source:"center1", target:"d1"}},
+             {data:{id:"ee1", source:"center1", target:"e1"}},
+             {data:{id:"fe1", source:"center1", target:"f1"}},
+
+             {data:{id:"link"}}, //limkinng center
+             {data:{id:"linked1", source:"link", target:"center"}},
+             {data:{id:"linked2", source:"link", target:"center1"}},
+             {data:{id:"linked3", source:"link", target:"center2"}},
+             
+
+
+             {data:{id:"a2", parent:"parent3"}}, //third circle
+             {data:{id:"b2", parent:"parent3"}},
+             {data:{id:"c2", parent:"parent3"}},
+             {data:{id:"d2", parent:"parent3"}},
+             {data:{id:"e2", parent:"parent3"}},
+             {data:{id:"f2", parent:"parent3"}},
+             {data:{id:"center2", parent:"parent3"}, classes:"category"},//center
+             {data:{id:"parent3"}, },//parent
+           //  {data:{id:"centere1", source:"center2", target:"center"}},//link centter
+             {data:{id:"ae2", source:"center2", target:"a2"}},
+             {data:{id:"be2", source:"center2", target:"b2"}},
+             {data:{id:"ce2", source:"center2", target:"c2"}},
+             {data:{id:"de2", source:"center2", target:"d2"}},
+             {data:{id:"ee2", source:"center2", target:"e2"}},
+             {data:{id:"fe2", source:"center2", target:"f2"}},
+
+             {data:{id:"a4", parent:"parent4"}}, //fourth circle
+             {data:{id:"b4", parent:"parent4"}},
+             {data:{id:"c4", parent:"parent4"}},
+             {data:{id:"d4", parent:"parent4"}},
+             {data:{id:"e4", parent:"parent4"}},
+             {data:{id:"f4", parent:"parent4"}},
+             {data:{id:"center4", parent:"parent4"}, classes:"category"},//center
+             {data:{id:"parent4"}, },//parent
+            {data:{id:"centere1", source:"center2", target:"center4"}},//link centter
+             {data:{id:"ae4", source:"center4", target:"a4"}},
+             {data:{id:"be4", source:"center4", target:"b4"}},
+             {data:{id:"ce4", source:"center4", target:"c4"}},
+             {data:{id:"de4", source:"center4", target:"d4"}},
+             {data:{id:"ee4", source:"center4", target:"e4"}},
+             {data:{id:"fe4", source:"center4", target:"f4"}},
+             
+          ]
+				});
+        
+        console.log(cy.container().clientWidth);
+        console.log(cy.container().clientWidth/2)
+
+        const a = cy.$("#a");
+        const link = cy.$("#link");
+        console.log(link.isNode())
+        link.position({x:0, y:50})
+        link.lock()
+        const parent = cy.$("#parent1");
+        // parent.layout({
+        //   avoidOverlap: true,
+        //   componentSpacing: 200 ,
+        // name: 'circle',}).run();
+       
+        const parent2 = cy.$("#parent2");
+       
+        // parent.layout({
+        //   avoidOverlap: true,
+        // name: 'circle',}).run()
+      
+       
+        const parent3 = cy.$("#parent3");
+        // parent.layout({
+        //   avoidOverlap: true,
+        // name: 'circle',}).run()
+
+        const parent4 = cy.$("#parent4");
+        // parent.layout({
+        //   avoidOverlap: true,
+        // name: 'circle',}).run()
+        
+        console.log()
+
+        console.log(a.json()); //class:"";
+
+      console.log(cy.nodes('[id != "center"]'));
+      cy.$("#center1").shift({x:100, y:100});
+      const btn = document.getElementById("btn")
+      btn.addEventListener("click",()=>{
+      })
+      </script>
+</body>
+</html>

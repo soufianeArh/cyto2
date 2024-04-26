@@ -1,0 +1,88 @@
+body{
+      padding:0;
+      margin:0
+}
+.login-container{
+      padding:0;
+      margin:0;
+      background-color: rgb(15, 15, 28);;
+      display: flex;
+      justify-content:center;
+      align-items:start;
+      height:calc(100vh);
+
+      /* padding-top:6rem;
+      padding-bottom:2rem; */
+   
+      background-image: url("../images/bg3.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      /* background-position: center; */
+}
+.login-container::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity as needed */
+      mix-blend-mode: multiply;
+  }
+  .card{
+      z-index: 10;
+      margin-top: 6rem;
+      
+  }
+  .card-title{
+      text-align: center;
+      font-size: large;
+  }
+
+.image-container{
+      /* background-image: url("../images/bg2.PNG"); */
+}
+.left-image{
+      height: 70vh;
+      min-width: 50vw;
+}
+.oauth-container{
+      padding-top:0.5rem
+}
+.oauth-text{
+      color: beige;
+     
+}
+.oauth-strategies{
+      margin-top:0.5rem;
+      display: flex;
+      justify-content: space-between;
+      padding: 0rem 2rem;
+   
+}
+.oauth-btn{
+      padding:.5rem .8rem;
+      border-radius: 100px;
+      color: white;
+}
+.oauth-btn-google{
+      background-color: rgb(159, 9, 9);
+}
+.oauth-btn-wechat{
+      background-color: green
+}
+.oauth-btn-github{
+      background-color:rgb(66, 23, 66)
+}
+.link-container{
+      text-align: center;
+      margin-top:0.8rem
+}
+a{
+      text-decoration: none;
+}
+.link{
+      color:beige;
+      text-align: center;
+}

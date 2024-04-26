@@ -1,0 +1,53 @@
+<%- include('partials/header2') %>
+
+<div class="login-container">
+      <div class="card">
+        <div class="card-title">
+           <h1 >登记</h1>
+        </div>
+          <!-- Makes POST request to /login route -->
+          <form action="/register" method="POST">
+            <div class="form-group">
+                  <input type="text" class="form-control" name="name" placeholder="身份证姓名" value=<%=name%>>
+                  <%if(nameError){ %>
+                  </br><span style="color: red; font-size: small;"><%=nameError%></span>
+                  <%}%>
+                </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="username" placeholder="电子邮件或用户名" value=<%=username%>>
+              <%if(usernameError){ %>
+              </br><span style="color: red; font-size: small;"><%=usernameError%></span>
+              <%}%>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="密码" value=<%=password%>>
+              <%if(passwordError){ %>
+                   </br><span style="color: red; font-size: small;"><%=passwordError%></span>
+              <%}%>
+            </div>
+            <div class="form-group">
+                  <input type="password" class="form-control" name="confirm" placeholder="确认密码" value=<%=confirm%>>
+                  <%if(confirmError){ %>
+                  </br><span style="color: red; font-size: small;"><%=confirmError%></span>
+                  <%}%>
+                </div>
+            <button type="submit" class="btn submit-btn">登录</button>
+          </form>
+          <div class="oauth-container">
+          <span class="oauth-text">或登录: </span>
+          <div class="oauth-strategies">
+                <a class="oauth-btn oauth-btn-google" href="/auth/google" role="button">
+                  <i class="fab fa-google "></i>
+                </a>
+                <a class="oauth-btn oauth-btn-wechat" href="/auth/wechat" role="button">
+                  <i class="fa-brands fa-weixin"></i>
+                </a>
+                <a class="oauth-btn oauth-btn-github" href="/auth/github" role="button">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+          </div>
+        </div>
+        </div>
+</div>
+
+<%- include('partials/footer2') %>

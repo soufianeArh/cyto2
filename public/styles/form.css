@@ -1,0 +1,36 @@
+.form-group{
+      margin-bottom: 0.5rem;
+}
+.form-control{
+      padding: .5rem;
+      width: 22rem;
+      background-color: rgba(240, 248, 255, 0.7);
+      border-radius: 4px;
+}
+.card-title{
+      color:beige;
+      font-weight: normal
+}
+.btn{
+
+}
+.submit-btn{
+width: 100%;
+padding:.4rem;
+margin-top: 0.8rem;
+}
+
+/* Remove default border */
+input {
+      border: none;
+  }
+  
+  /* Remove default outline */
+  input:focus {
+      outline: none;
+  }
+  
+  /* Remove default box-shadow */
+  input {
+      box-shadow: none;
+  }

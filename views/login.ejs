@@ -1,0 +1,51 @@
+<%- include('partials/header2') %>
+
+<!-- <div class="container mt-5 login-container"> -->
+  <div class="login-container">
+ 
+  
+      <div class="card">
+        <div class="card-title">
+           <h1 >登录</h1>
+        </div>
+          <!-- Makes POST request to /login route -->
+          <form action="/login" method="POST">
+            <div class="form-group">
+              <input type="text" class="form-control" name="username" placeholder="用户名">
+              <%console.log("emailerror", emailError)%>
+              <%if(emailError===true){ %>
+              </br><span style="color: red;">用户名找不到</span>
+              <%}%>
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control" name="password" placeholder="密码">
+              <%if(passwordError===true){ %>
+                  <p style="color: red;">密码错误</p>
+              <%}%>
+            </div>
+            <button type="submit" class="btn submit-btn">登录</button>
+          </form>
+          <div class="oauth-container">
+          <span class="oauth-text">或登录 : </span>
+          <div class="oauth-strategies">
+                <a class="oauth-btn oauth-btn-google" href="/auth/google" role="button">
+                  <i class="fab fa-google "></i>
+                </a>
+                <a class="oauth-btn oauth-btn-wechat" href="/auth/wechat" role="button">
+                  <i class="fa-brands fa-weixin"></i>
+                </a>
+                <a class="oauth-btn oauth-btn-github" href="/auth/github" role="button">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+          </div>
+        </div>
+        <div class="link-container">
+          <a class="link" href="/register">创建一个新账户</a>
+        </div>
+        </div>
+  <!-- <div class="image-container"> -->
+    <!-- <img class="left-image" src="http://localhost:3000/images/bg3.jpg"/> -->
+  <!-- </div> -->
+</div>
+
+<%- include('partials/footer2') %>

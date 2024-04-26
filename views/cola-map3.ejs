@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js" integrity="sha512-RcuA+PEnJcg1caTn53YLhZ3bYVFXphzcPL1BjBoAwFiA3bErav+AndZz1xrqpAtv/8Waep2X+9zn8KWpwacUSA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script src="
+      https://cdn.jsdelivr.net/npm/cytoscape-node-html-label@1.2.2/dist/cytoscape-node-html-label.min.js
+      "></script>
+    
+      <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-cola@2.5.1/cytoscape-cola.min.js"></script>
+<!-- d3Force -->
+      <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+      <script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
+      <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+      <script src="https://d3js.org/d3-force.v2.min.js"></script>
+      <script>
+        window['d3-force'] = d3
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-d3-force@1.1.4/cytoscape-d3-force.min.js"></script>
+<!-- cise -->
+      <script src="https://unpkg.com/layout-base@1.0.2/layout-base.js"></script>
+      <script src="https://unpkg.com/avsdf-base/avsdf-base.js"></script>
+      <script src="https://unpkg.com/cose-base@1.0.3/cose-base.js"></script>
+      <script src="https://unpkg.com/cytoscape-graphml/cytoscape-graphml.js"></script>
+      <script src="https://raw.githack.com/iVis-at-Bilkent/cytoscape.js-layvo/unstable/cytoscape-layvo.js"></script>
+      <script src="
+      https://cdn.jsdelivr.net/npm/cytoscape-cise@1.0.0/cytoscape-cise.min.js
+      "></script>
+<!-- cose-bilkent -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/shim.min.js"></script>
+      <script src="https://unpkg.com/layout-base/layout-base.js"></script>
+      <script src="https://unpkg.com/cose-base/cose-base.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.min.js"></script>
+<!-- dagre -->
+      <script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/shim.min.js"></script>
+<!-- avsdf -->
+      <script src="https://unpkg.com/layout-base/layout-base.js"></script>
+      <script src="https://unpkg.com/avsdf-base/avsdf-base.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-avsdf@1.0.0/cytoscape-avsdf.min.js"></script>
+  <!-- klay -->  
+      <script src="https://unpkg.com/klayjs@0.4.1/klay.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-klay@3.1.4/cytoscape-klay.min.js"></script>
+  <!-- ngraph -->  
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-ngraph.forcelayout@1.4.0/cytoscape-ngraph.forcelayout.min.js"></script>
+ <!-- spread -->
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-spread@3.0.0/cytoscape-spread.min.js"></script>
+<!-- springy -->
+      <script src="https://cdn.rawgit.com/dhotson/springy/2.7.1/springy.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-springy@1.4.2/cytoscape-springy.min.js"></script>
+      <!-- tidytree -->
+      <script src="https://cdn.jsdelivr.net/npm/cytoscape-tidytree@0/dist/cytoscape-tidytree.js"></script>
+      <!-- <script src="https://cdn.jsdelivr.net/npm/cytoscape-cise@1.0/cytoscape-cise.min.js"></script> -->
+      <!-- <script src="https://cdn.jsdelivr.net/npm/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.min.js"></script> -->
+      <!-- <script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+      <script src="cytoscape-node-html-label.js"></script> -->
+     <!-- <script href="http://localhost:3000/node_modules/cytoscape-html-node/dist/main.bundle.js"></script> -->
+    
+    <!-- <script type="module">
+            import * as htmlNode  from "http://localhost:3000/cytoscape-html-node/dist/main.bundle.js"
+            window.htmlNode = htmlNode
+     </script> -->
+     <script>
+
+     </script>
+ 
+    <style>
+            main{
+              position: relative;
+                display: flex;
+                width:100vw;
+                height: 100vh;
+                /* color:beige */
+                color:#757576;
+            }
+            #cy {
+              width:  100%;
+              height:  100%;
+              display: block;
+            
+              background-color: rgb(15, 15, 28);
+            }
+           
+           
+            .header2-ctn{
+              display: flex;
+              position: absolute;
+              right:14rem
+                      }
+            i{
+              color:#757576;
+              padding: 0.3rem;
+            }
+            i:hover{
+              color:beige;
+            }
+           
+           
+            .cy-title__p1{
+              color:rgb(155, 164, 155)
+            }
+            .cy-title__p2{
+              color:beige
+            }
+           
+          .footer-ctn{
+             position:absolute;
+             bottom:2rem;
+             right:1rem;
+             left:1rem;
+             
+             display:flex ;
+             justify-content: center;
+             /* flex-direction: row-reverse; */
+          }
+          #center-btn:hover .hover-footer-text {
+              display: block;
+            }
+            #export-btn:hover .hover-footer-export {
+              display: block;
+              left:-55%;
+              right:-55%;
+              display: flex;
+              flex-direction: column;
+            }
+            #center-btn:hover i{
+              color: beige
+            }
+            #export-btn:hover i{
+              color: beige
+            }
+            #compass-btn:hover i.fa-compass{
+              color: beige
+            }
+            #compass-btn:hover .hover-footer-compass {
+              display: block;
+              width:6rem;
+              height: 6rem;
+              left:-55%;
+              right:-55%;
+            }
+            .hover-footer-export div:hover {
+             color: white;
+            }
+            .hover-footer-compass div i:hover{
+              color: beige
+            };
+            .hover-footer-compass #compass-up{
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              top: 0;
+              right: 0;
+              left:0;
+              font-size: 6rem;
+            }
+            .hover-footer-compass #compass-down{
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              bottom: 0;
+              right: 0;
+              left:0
+            }
+            .hover-footer-compass #compass-left{
+              position: absolute;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              top: 0;
+              bottom: 0;
+              left:0
+            }
+            .hover-footer-compass #compass-right{
+              position: absolute;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              top: 0;
+              right: 0;
+              bottom:0
+            }
+            #graph-btn:hover .hover-footer-graph{
+            display:block;
+            left:-20%;
+            right:-20%;
+          }
+          .hover-footer-ctn{
+            position: absolute;
+            bottom:3rem;
+            right:0;
+            left:0;
+
+            display:flex ;
+            justify-content: center;
+          }
+          .hover-footer{
+            position: absolute;
+            bottom:2rem;
+            padding: 0.3rem;
+            color:#757576;
+            display:none;
+            background-color:#2d3a45a0
+          }
+          .hover-footer-text{
+            left:-45%;
+            right:-45%;
+          };
+          .hover-footer-graph{
+            left:-20%;
+            right:0;
+          };
+          
+         
+          .side-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            left:0;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            background-color:#d0dbe5a0
+            /* background-color:#2d3a45a0 */
+          }
+          .side-ads-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            right:8rem;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .side-ads-popup .side-dim{
+              width: 500px;
+              height: 400px;
+              background-color:#d0dbe5a0;
+          }
+          .side-product-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            right:8rem;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .side-product-popup .side-dim{
+              width: 500px;
+              height: 400px;
+              background-color:#d0dbe5a0;
+          }
+          .hidden {
+  display: none !important;
+}; .focus{
+  color:beige !important;
+  font-weight: bold;
+}
+         /* .side-contact-popup{
+            position: absolute;
+            bottom:0;
+            top:0;
+            right:8rem;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+          } */
+          .side-contact-popup .side-dim{
+              width: 300px;
+              height: 200px;
+          }
+          .side-contact-popup .side-dim .delete-bar{
+              background-color:#d0dbe5a0;
+          }
+          #mydiv {
+              position: absolute;
+              left: 30rem;
+              top:10rem;
+              z-index: 9;
+              background-color: #2d30468c;
+              border: 1px solid #d3d3d3;
+              text-align: center;
+            }
+            #mydivheader {
+              padding: 10px;
+              cursor: move;
+              z-index: 10;
+              background-color:#495065c4;
+              color: #fff;
+              position:relative
+            }
+            .drag-ctn{
+               padding: 0.4rem;
+               height: 16rem;
+               overflow-y: scroll;
+               max-width: 22rem;
+            }
+            .drag-ctn::-webkit-scrollbar {
+                display: none;
+            }
+
+          .drag-item{
+            display:flex;
+            align-items: center;
+
+          }
+          .drag-item span{
+            color: beige;
+          }
+          .compress{
+            position: absolute;
+            cursor: pointer;
+            top: .5rem;
+            right: .5rem;
+          }
+          .compress-remove{
+              position: absolute;
+              cursor: pointer;
+              top: .5rem;
+              left: .5rem;
+          }
+        
+            .header-item:hover i{
+              color: beige;
+              
+            }
+            .data-list-container h2{
+              font-size: medium;
+              color: beige;
+            }
+          .header2-ctn{
+              display: flex;
+              justify-content: flex-end;
+              position: absolute;
+              right:0;
+              left:0
+          }
+          .header-item2{
+              background-color: transparent;
+              border: 0.1rem solid #757576 !important;
+              color:#757576;
+              border-radius: 0.2rem;
+              margin: 0.2rem;
+              padding:0.2rem;
+              
+              display:flex
+            }
+            .header-item-user{
+               display:flex;
+               align-items: center;
+               background-color: #757576;
+               margin: 0.2rem;
+               border-radius: 3rem;
+               position:relative;
+            }
+            .header-item-user i {
+              color:#2d30468c;
+            }
+            .header-search{
+              display:flex;
+            }
+            .header-search input {
+              background: transparent !important;
+              color: beige;
+              border:none
+            }
+            .header-search button {
+              background: transparent !important;
+              border:none
+            }
+            .error-id{
+              position: absolute;
+              top:6rem;
+              right:0;
+              left:0;
+              display: flex;
+              justify-content:center;
+             
+            }
+            .error-id span{
+              background-color:beige;
+              color: rgb(48, 48, 49);
+              padding:0.2rem;
+            }
+            .error-id span i {
+              color: rgb(113, 36, 36);
+            };
+            #mydiv2 { 
+              position: absolute;
+              left: 0rem;
+              top:10rem;
+              z-index: 9;
+              background-color: #2d30468c;
+              border: 1px solid #d3d3d3;
+              text-align: center;
+            }
+            .mydiv2 { 
+              position: absolute;
+              left: 0rem;
+              top:10rem;
+              z-index: 9;
+              background-color: #2d30468c;
+              border: 1px solid #d3d3d3;
+              text-align: center;
+              display: flex;
+            }
+            #mydiv2header2 {
+              padding: 10px;
+              cursor: move;
+              z-index: 10;
+              background-color:#495065c4;
+              color: #fff;
+              position:relative
+            }
+            i#direction{
+              color: #7d7d81c4;
+            }
+            i#direction:hover{
+              color: #ececf0c4;
+            }
+            
+           
+            
+            .sidebar-ctn{
+               position:absolute;
+               top:0;
+               bottom:0;
+               right:1rem;
+              
+               display: flex;
+               flex-direction: column;
+               justify-content: center;
+            }
+            .header1-ctn{
+              position: absolute;
+              /* width: 100%; */
+              top: 0;
+              left: 0;
+              display:flex;
+              align-items: center;
+              z-index: 10;
+
+            }
+            #header-item-help:hover{
+              background-color: rgba(124, 124, 126, 0.595) !important;
+              color: beige !important;
+            }
+            .header-item{
+               cursor: pointer;
+              background-color: transparent;
+              /* color:rgb(214, 214, 143); */
+              color:#757576;
+              border: 0;
+              padding:4px 8px;
+              position:relative;
+              display:flex;
+              text-decoration: none;
+            }
+            .header-item:hover{
+              background-color: rgba(124, 124, 126, 0.595) !important;
+              color: beige !important;
+            }
+           #header-item .popup{
+            position: absolute;
+            display: none;
+            top: 2rem;
+            right:0%;
+            left:0%;
+            color:#808181;
+            /* display:none; */
+            background-color: rgba(124, 124, 126, 0.595) !important;
+           }
+           #header-item:hover .popup{
+            display: block;
+           }
+           .popup p:hover{
+            color:beige
+           }
+          
+           .header-item-user .popup{
+            position: absolute;
+            display: block;
+            top: 2rem;
+            right:-50%;
+            left:-250%;
+            border-radius: 10px;
+            color:#808181;
+            /* display:none; */
+            background-color: rgba(124, 124, 126, 0.595) !important;
+           }
+           #header-item-user:hover .popup{
+            display: block;
+           }
+           #header-item-user i:hover .popup{
+            display: block;
+           }
+           .popup-item-user{
+            border-bottom: 2px solid rgb(46, 45, 45);
+            margin:0
+           }
+           .popup p:hover {
+            color:beige; 
+           }
+          
+      </style>
+</head>
+<body>
+   
+      <main class="container">
+        <!-- <button id="btn">click me</button> -->
+        <div id="cy"></div>
+        <div class="header1-ctn ">
+
+              <a href="http://localhost:3000/cola-map3" class="header-item">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>刷新图表</span>
+              </a>
+              <button id="header-item" class="header-item">
+                <i class="fa-solid fa-server"></i>
+                <span>服务器</span>
+                <div class="popup">
+                  <p>服务器-01</p>
+                  <p>服务器-02</p>
+                  <p>服务器-03</p>
+                  <p>服务器-04</p>
+                </div>
+              </button>
+              <button id="header-item" class="header-item">
+                  <i class="fa-solid fa-square-poll-vertical"></i>
+                  <span>统计数据</span>
+                  <div class="popup">
+                    <p>统计数据-01</p>
+                    <p>统计数据-02</p>
+                    <p>统计数据-03</p>
+                    <p>统计数据-04</p>
+                  </div>
+              </button>
+              <button id="header-item" class="header-item">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>设备</span>
+                <div class="popup">
+                  <p>设备-01</p>
+                  <p>设备-02</p>
+                  <p>设备-03</p>
+                  <p>设备-04</p>
+                </div>
+              </button>
+          </div>
+          <div class="header2-ctn">
+            <div class="header-search header-item2">
+              <input id="header-search-input" type="text" placeholder="大类搜索"/>
+              <button id="header-search-btn" class=""><i class="fa-brands fa-searchengin"></i></button>
+            </div>
+              <button class="header-item2">
+                <i class="fa-solid fa-video"></i>
+              </button>
+            <button class="header-item2">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <button class="header-item2">
+              <i class="fa-solid fa-cloud"></i>
+            </button>
+            <button class="header-item2">
+              <i class="fa-regular fa-circle-question"></i>
+            </button>
+            <button id="header-item-user" class="header-item-user ">
+              <i class="fa-solid fa-user"></i>
+              <div class="popup">
+                <p class="popup-item-user">
+                  <%=username%>
+                </p>
+                <p class="popup-item-user">
+                  <%=username%>
+                </p>
+                <p id="logout-btn" class="popup-item-user" >
+                   Log-Out
+                </p>
+              </div>
+            </button>
+        </div>
+      </div>
+
+      <div class="sidebar-ctn">
+          <button id="side-ads" class="header-item">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>广告</span>
+          </button>
+          <button id="side-product" class="header-item">
+            <i class="fa-brands fa-product-hunt"></i>
+            <span>产品</span>
+          </button>
+          <button id="side-contact" class="header-item">
+            <i class="fa-solid fa-headset"></i>
+            <span>联系</span>
+          </button>
+      </div>
+      <div id="error-id" class="error-id hidden">
+        <span> <i class="fa-solid fa-circle-exclamation"></i>
+          您提供的信息不正确</span>
+      </div>
+      <div id="side-ads-popup" class="side-popup side-ads-popup hidden">
+        <div class="side-dim">
+          <div class="delete-bar"><i id="close-ads" class="fa-solid fa-rectangle-xmark"></i></div>
+          <!-- <iframe src="https://baike.baidu.com/item/%E7%89%A9%E8%81%94%E7%BD%91/7306589" width="100%" height="100%" frameborder="0"></iframe> -->
+        </div>
+      </div>
+      <div id="side-product-popup" class="side-popup side-ads-popup hidden">
+        <div class="side-dim">
+          <div class="delete-bar"><i id="close-product" class="fa-solid fa-rectangle-xmark"></i></div>
+          <!-- <iframe src="https://www.bing.com/images/search?q=drone&qs=n&form=QBIR&sp=-1&lq=0&pq=dro&sc=10-3&cvid=EB24BF58D4D2420BBFE274C0AAB49E62&ghsh=0&ghacc=0&first=1" width="100%" height="100%" frameborder="0"></iframe> -->
+        </div>
+      </div>
+     
+        <div id="side-contact-popup"  class="side-popup side-ads-popup side-contact-popup hidden ">
+          <div class="side-dim">
+          <div class="delete-bar" ><i id="close-contact" class="fa-solid fa-rectangle-xmark"></i></div>
+           <img width="100%" height="100%" src="http://localhost:3000/images/card2.png"/>
+          </div>
+        </div>
+      
+      <div id="mydiv" class="hidden">
+        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+        <div id="mydivheader">
+          <span id="mydivheader-title">点击此处移动</span>
+          <div id="compress-btn" class=" compress">
+          <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
+        </div>
+        <div id="compress-remove" class=" compress-remove">
+          <i id="close-compress" class="fa-solid fa-rectangle-xmark"></i>
+        </div>
+        </div>
+        <div id = "drag-ctn" class="drag-ctn">
+           
+        </div>
+      </div>
+      <div id="mydiv2" class="mydiv2">
+        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+       
+        <div id="mydiv2header2">
+          <i class="fa-solid fa-arrows-up-down-left-right"></i>
+      </div>
+      <div class="header-search header-item2">
+        <input id="header-search-input2" type="text" placeholder="品类搜索"/>
+        <button id="header-search-btn2" class=""><i class="fa-brands fa-searchengin"></i></button>
+      </div>
+      </div>
+
+      <div class="footer-ctn">
+        <button id="graph-btn" class=" graph-btn header-item">
+          <i class="fa-solid fa-network-wired"></i>
+          <div class="hover-footer hover-footer-graph child-graph">
+            <div id="cola-layout">默认</div>
+            <div id="klay-layout">KLAY</div>
+            <div id="cise-layout">Cise</div>
+            <!-- <div id="ngraph-layout">NGRAPH</div> -->
+            <!-- <div id="spread-layout">spread</div> -->
+            <!-- <div id="springy-layout">springy</div> -->
+
+            
+            <!-- <div id="avsdf-layout">avsdf</div> -->
+            <div id="tidytree-layout">tidytree</div>
+            <div id="dagre-layout">dagre</div>
+            <!-- <div id="d3Force-layout">d3Force</div> -->
+            <div id="concentric-layout">同心</div>
+           
+           
+            <!-- <div id="bilkent-layout">cose-bilkent</div> -->
+           
+            <div id="bread-layout">树结构</div>
+           
+            <!-- <div id="grid-layout">Grid</div> -->
+          </div>
+        </button>
+            <button id="center-btn" class="header-item">
+              <i class="fa-solid fa-arrows-to-circle"></i>
+              <div class="hover-footer hover-footer-text">
+                将图表居中
+              </div>
+            </button>
+            <button id="export-btn" class="header-item">
+              <i class="fa-solid fa-download"></i>
+              <div class="hover-footer hover-footer-export">
+                <div id="export-png">PNG</div>
+                <div id="export-jpg">JPG</div>
+                <div id="export-json">JSON</div>
+              </div>
+            </button>
+            <button id="compass-btn" class="header-item">
+              <i class="fa-solid fa-compass"></i>
+              <div class="hover-footer hover-footer-compass">
+                <div id="compass-up"><i id="direction" class="fa-solid fa-up-long"></i></div>
+                <div id="compass-down"><i id="direction" class="fa-solid fa-down-long"></i></div>
+                <div id="compass-left"><i id="direction" class="fa-solid fa-left-long"></i></div>
+                <div id="compass-right"><i id="direction" class="fa-solid fa-right-long"></i></div>
+              </div>
+            </button>
+         
+    
+      </main>
+      <script >
+          const logoutBtn = document.getElementById("logout-btn")
+          logoutBtn.addEventListener(
+            "click",()=>{
+              console.log("logout")
+              fetch("http://localhost:3000/logout")
+            })
+
+         var nodesFruits =JSON.parse(`<%-JSON.stringify(nodesFruits)%>`);
+         var nodesVegetables =JSON.parse(`<%-JSON.stringify(nodesVegetables)%>`);
+         var nodesOthers =JSON.parse(`<%-JSON.stringify(nodesOthers)%>`);
+         var linksNodes = [
+            {data:{id:"linked1", type:"linking", source:"vegetables", target:"fruits"}, classes: 'sube'},
+            {data:{id:"linked2", type:"linking", source:"vegetables", target:"others"}, classes: 'sube'},
+            {data:{id:"linked3", type:"linking", source:"others", target:"fruits"}, classes: 'sube'},
+           ];
+         var klayNodes = [
+            {data:{id:"linkKlay"}},
+            {data:{id:"linked1-klay", type:"linking", source:"linkKlay", target:"fruits"}, classes: 'sube'},
+            {data:{id:"linked2-klay", type:"linking", source:"linkKlay", target:"others"}, classes: 'sube'},
+            {data:{id:"linked3-klay", type:"linking", source:"linkKlay", target:"vegetables"}, classes: 'sube'},
+          ]
+           
+     
+
+            var cy = cytoscape({
+					container: document.getElementById('cy'),
+          wheelSensitivity: 0.3,
+          animate: true,
+          refresh: 1,
+          zoomingEnabled: true,
+          layout: {
+            name: 'cola',
+            infinite: true,
+            idealEdgeLength: 5,
+            fit:false,
+            maxSimulationTime:10000,
+            avoidOverlap: true, //edge though edge
+            convergenceThreshold: 0.01,
+            nodeSpacing: function( node ){ return 10; },
+	        },
+          style:  [
+  {
+    selector: 'node',
+    style: {
+      'color': 'white',//label used to be black to not show
+      'background-color': '#FFF',//node
+      'label': 'data(label)',
+      'font-size': '8px',
+      'width': '6px', // Set width of special nodes
+      'height': '6px',
+      cursor: 'pointer'
+    }
+  },
+  {
+      selector: '.sube1',
+      style: {
+            edgeLength: 50,
+            idealEdgeLength: 100
+      }
+  },
+  {
+    selector: '#box',
+    style: {
+      'shape': 'rectangle',
+      'color': 'white',
+       'text-wrap': 'wrap',
+      // 'background-color': '#0F0F1C',// color is same as canvas~bg
+      'background-color': '#f00',
+      'label': 'data(content)',
+      'width': '200px', // Set width of special nodes
+      'height': '200px',
+      'font-size': '16px',
+      // 'font-weight': 'bold',
+      'color': "beige",
+      // 'content': 'data(content)',
+      'text-valign': 'center',
+    }
+  },{
+    selector: 'edge',
+    style: {
+      'line-color': ' #888',
+      // 'target-arrow-color': '#ccc',
+      // 'target-arrow-shape': 'triangle',
+      'curve-style': 'unbundled-bezier',
+      'target-arrow-width': 1 ,
+      'control-point-distance': 5,//curvy ratio
+      'width': '0.5px', // Set width of special nodes
+    }
+  },
+  {
+      selector: '.linkedge',
+      style: {
+        'width': '1px',
+        'control-point-distance': 20,//curvy ratio
+      }
+    },{
+      selector: '.category',
+      style: {
+        'background-color': 'blue',
+        'font-size': '18px',
+         "marginBottom":"10px"
+      }
+    },
+    {
+      selector: '#parent1',
+      style: {
+        'background-color': 'blue'
+      }
+    },
+  {
+      selector: '#centere1',
+      style: {
+        length: 700,
+        "curve-style": 'unbundled-bezier',//curvy style
+        'control-point-distance': 10,//curvy ratio
+        'control-point-weight': 0.5//ratio of how much it will invade target
+      }
+    },
+    {
+      selector: '.orange',
+      style: {
+        'color': 'black',//label
+      'background-color': '#f60',//node
+      'display':"none"
+      }
+    },
+    {
+      selector: '.litchi',
+      style: {
+        'color': 'black',//label
+      
+      
+      }
+    }
+],
+          elements:[
+            nodesFruits.category,
+            ...nodesFruits.subsData,
+            nodesVegetables.category,
+            ...nodesVegetables.subsData,
+            nodesOthers.category,
+            ...nodesOthers.subsData,
+            ...linksNodes
+          ]
+				});
+         //Layout events
+         function changeLayout (options){
+          cy.layout(options).run()
+        }
+        cy.on('layoutstop', function(event) {
+    console.log('Layout stopped');
+    cy.nodes()
+    // Additional actions you want to perform when layout stops
+});
+        var displayLayout = "cola"
+        function refreshLayout (){
+          if(displayLayout === "breadthfirst"){
+            changeLayout({name:"breadthfirst",  
+            minNodeSpacing: 80,
+             avoidOverlap: true,})
+          }else if(displayLayout === "concentric" || displayLayout === "cola"){
+            changeLayout({
+            name: 'cola',
+            infinite: true,
+            idealEdgeLength: 5,
+            fit:false,
+            maxSimulationTime:10000,
+            avoidOverlap: true, //edge though edge
+            convergenceThreshold: 0.01,
+            nodeSpacing: function( node ){ return 10; },
+          })
+          }else if(displayLayout==="cise"){
+            changeLayout({
+            name:"cola",
+            infinite: true,
+            fit:false,
+            maxSimulationTime: 1000, /////////12
+            avoidOverlap: true,
+            stop: function(){
+              console.log("stopped")
+               cy.nodes().lock()
+              },
+            nodeSpacing: function( node ){ return 10; }
+          });
+
+            // cy.nodes().lock();
+          }
+          // else if(displayLayout==="cose-bilkent"){
+          //   changeLayout({name:"cose-bilkent"})
+          // }
+          else if(displayLayout==="dagre"){
+            changeLayout({name:"dagre"})
+          }
+        //   else if (displayLayout==="avsdf"){
+        //     changeLayout({name:"circle",
+        //     padding: 30,
+        //   avoidOverlap:true,
+        //   stop:function (){cy.nodes().lock()}
+        // })
+        //   }
+          else if(displayLayout==="klay"){
+            changeLayout({name:"klay"})
+          }else if(displayLayout==="ngraph"){
+            changeLayout({name:"cytoscape-ngraph.forcelayout"})
+          }else if(displayLayout==="d3-force"){
+            changeLayout({name:"d3-force"})
+          }
+          // else if(displayLayout==="spread"){
+          //   changeLayout({name:"spread"})
+          // }
+          // else if(displayLayout==="springy"){
+          //   changeLayout({name:"springy"})
+          // }
+          else if (displayLayout==="tidytree"){
+            changeLayout({name:"tidytree"})
+          }
+        }
+        cy.on('layoutstop', function(event) {
+          if(displayLayout==="cise"){
+            console.log("here i should lock it cise")
+            cy.nodes().lock();
+          }
+       });
+        const colaLayout = document.getElementById("cola-layout");
+        const concentricLayout = document.getElementById("concentric-layout");
+        // const gridLayout = document.getElementById("grid-layout");
+        const breadLayout = document.getElementById("bread-layout");
+        const ciseLayout = document.getElementById("cise-layout");
+        // const d3ForceLayout = document.getElementById("d3Force-layout");
+        // const bilkentLayout = document.getElementById("bilkent-layout");
+        const dagreLayout = document.getElementById("dagre-layout");
+        // const avsdfLayout = document.getElementById("avsdf-layout");
+        const klayLayout = document.getElementById("klay-layout");
+        // const ngraphLayout = document.getElementById("ngraph-layout");
+        // const spreadLayout = document.getElementById("spread-layout");
+        // const springyLayout = document.getElementById("springy-layout");
+        const tidytreeLayout= document.getElementById("tidytree-layout");
+        tidytreeLayout.addEventListener("click",()=>{
+          displayLayout = "tidytree"
+          cy.edges(`[type="linking"]`).remove()
+          cy.add(klayNodes)
+          cy.nodes().unlock();
+          changeLayout({name : 'tidytree',})
+          cy.nodes().lock();
+        })
+        // springyLayout.addEventListener("click",()=>{
+        //   displayLayout = "springy"
+        //   console.log("springy")
+        //   // cy.edges(`[type="linking"]`).remove()
+        //   cy.nodes().unlock();
+        //   changeLayout({name : 'springy',})
+        //   cy.nodes().lock();
+        // })
+        // spreadLayout.addEventListener("click",()=>{
+        //   displayLayout = "spread"
+        //   cy.edges(`[type="linking"]`).remove()
+        //   cy.nodes().unlock();
+        //   changeLayout({name : 'spread',})
+        //   cy.nodes().lock();
+        // })
+        // ngraphLayout.addEventListener("click",()=>{
+        //   displayLayout = "ngraph"
+        //   cy.edges(`[type="linking"]`).remove()
+        //   cy.nodes().unlock();
+        //   changeLayout({name : 'cytoscape-ngraph.forcelayout',})
+        //   cy.nodes().lock();
+        // })
+       
+        klayLayout.addEventListener("click",()=>{
+          displayLayout = "klay"
+          cy.edges(`[type="linking"]`).remove()
+          cy.add(klayNodes)
+          cy.nodes().unlock();
+          changeLayout({
+            name : 'klay',
+            klay:{
+  
+         
+          }})
+          cy.nodes().lock();
+        })
+        // avsdfLayout.addEventListener("click",()=>{
+        //   displayLayout = "avsdf"
+        //   cy.edges(`[type="linking"]`).remove()
+        //   cy.nodes().unlock();
+        //   changeLayout({name : 'avsdf',})
+        //   cy.nodes().lock();
+        // })
+        dagreLayout.addEventListener("click",()=>{
+          displayLayout = "dagre"
+          cy.edges(`[type="linking"]`).remove()
+          cy.nodes().unlock();
+          changeLayout({name : 'dagre',})
+          cy.nodes().lock();
+        })
+        // bilkentLayout.addEventListener("click",()=>{
+        //   displayLayout = "cose-bilkent"
+        //   cy.add(linksNodes)
+        //   cy.nodes().unlock();
+        //   changeLayout({name : 'cose',})
+        //   cy.nodes().lock();
+        // })
+      //  d3ForceLayout.addEventListener("click", ()=>{
+      //     cy.add(linksNodes)
+      //     cy.nodes().unlock();
+      //     displayLayout = "d3-force"
+      //     changeLayout({name : 'd3-force',});
+        
+      //   }) 
+       ciseLayout.addEventListener("click",()=>{
+        cy.edges(`[type="linking"]`).remove()
+        cy.add(linksNodes)
+        cy.nodes().unlock();
+        displayLayout = "cise"
+        changeLayout({name : 'cise',})
+         cy.nodes().lock();
+        
+       })
+        colaLayout.addEventListener("click",()=>{
+          cy.add(linksNodes)
+          cy.nodes().unlock();
+          displayLayout = "cola"
+          let layoutOptions = {
+            name: 'cola',
+            infinite: true,
+            idealEdgeLength: 5,
+            fit:false,
+            maxSimulationTime:10000,
+            avoidOverlap: true, //edge though edge
+            convergenceThreshold: 0.01,
+            nodeSpacing: function( node ){ return 10; },
+          };
+          changeLayout(layoutOptions)
+        })
+        concentricLayout.addEventListener("click",()=>{
+          let addonsEles = cy.$(`[isAddon = "true"]`)
+          addonsEles.remove()
+          cy.nodes().unlock();
+          cy.edges(`[type="linking"]`).remove()
+          displayLayout = "cola"
+          let layoutOptions = {
+            name:"concentric",
+            padding: 15,
+            minNodeSpacing: 80,
+             avoidOverlap: true,
+          }
+          changeLayout(layoutOptions)
+          cy.nodes().lock();
+        });
+       
+        breadLayout.addEventListener("click",()=>{
+          let addonsEles = cy.$(`[isAddon = "true"]`)
+          addonsEles.remove();
+          cy.nodes().unlock();
+          displayLayout = "breadthfirst";
+          cy.edges(`[type="linking"]`).remove()
+          let layoutOptions = {
+            name:"breadthfirst",
+            padding: 15,
+            circle: false,
+            rankDir: 'LR'
+            // minNodeSpacing: 50,
+            // avoidOverlap: true,
+          }
+          changeLayout(layoutOptions)
+          cy.nodes().lock();
+        })
+        // gridLayout.addEventListener("click",()=>{
+        //   cy.layout({
+        //     name:"grid"
+        //   }).run()
+        //   cy.nodes().lock()
+        // });
+
+        //not found 
+        const errorAlert = document.getElementById("error-id");
+        function displayError(){
+          errorAlert.classList.remove("hidden")
+            setTimeout(() => {
+              errorAlert.classList.add("hidden")
+            }, 1000);
+        }
+        //name seatch
+        const headerInput2 = document.getElementById("header-search-input2");
+        const headerSearch2 = document.getElementById("header-search-btn2");
+        function displayName(nodesData, nameData, category ) {
+          console.log("displayName active")
+          const relativeSub = nodesData.varietiesData[nameData][0].data.parentSub;
+              if(!showNamesList[category].names.includes(relativeSub)){
+                const relativeSubNode = cy.nodes(`[label = '${relativeSub}']`)
+                relativeSubNode.trigger('click');
+              }
+           
+              const selectedName = cy.nodes(`[label = '${nameData}'][type="names"]`)
+              selectedName.trigger('click');
+        }
+        headerSearch2.addEventListener("click",()=>{
+          console.log("headerSearch2 clicked", headerInput2.value);
+          if (nodesFruits.varietiesData[headerInput2.value]){
+             displayName(nodesFruits, headerInput2.value, "fruits")
+          }else if (nodesVegetables.varietiesData[headerInput2.value]){
+            displayName(nodesVegetables, headerInput2.value, "vegetables")
+          }else if (nodesOthers.varietiesData[headerInput2.value]){
+            displayName(nodesOthers, headerInput2.value, "others")
+          }else{
+            displayError()
+          }
+        })
+        //sub seatch
+        const headerInput = document.getElementById("header-search-input");
+        const headerSearch = document.getElementById("header-search-btn");
+        function displaySub(nodesData, subData ) {
+          console.log(showNamesList)
+          // if(!showNamesList[category].subs.includes(relativeSub)){
+          //       const relativeSubNode = cy.nodes(`[label = '${relativeSub}']`)
+          //       relativeSubNode.trigger('click');
+          //     }
+              const selectedName = cy.nodes(`[label = '${subData}'][type="subs"]`);
+
+              selectedName.trigger('click');
+        }
+        headerSearch.addEventListener("click",()=>{
+          console.log("headerSearch2 clicked", headerInput2.value);
+          if (nodesFruits.namesData[headerInput.value]){
+             displaySub(nodesFruits, headerInput.value)
+          }else if (nodesVegetables.namesData[headerInput.value]){
+            displaySub(nodesVegetables, headerInput.value)
+          }else if (nodesOthers.namesData[headerInput.value]){
+            displaySub(nodesOthers, headerInput.value)
+          }else {
+             displayError()
+          }
+        })
+
+        
+        var showNamesList = {
+          fruits:{names:[], varieties:[]},
+          vegetables:{names:[], varieties:[]},
+          others:{names:[], varieties:[]}
+        }
+        const dragDiv = document.getElementById("mydiv");
+        const dragHeaderTitle = document.getElementById("mydivheader-title")
+        const dragCtn = document.getElementById("drag-ctn");
+       
+        function popupContent (type, label, typeIndex, data){
+          dragHeaderTitle.innerHTML=`
+          ${typeIndex}: ${label}<br>
+          `
+          dragCtn.innerHTML =  `
+          <div class="drag-item">
+            <i class="fa-solid fa-handshake"></i>
+            <p>类别: ${type}</p>
+          </div>
+          <div class="drag-item">
+            <i class="fa-solid fa-certificate"></i>
+            <p> ${typeIndex} : ${label}</p>
+          </div>
+          <div class="data-list-container">
+            <h2>植物信息</h2>
+             <li>ID:  ${data.id}</li>
+             <li>等级: ${data.level}</li>
+             <li>种类:  ${data.sort}</li>
+             <li>创建时间: ${data.created_at}</li>
+             <li>更新时间: ${data.updated_at}</li>
+             <li>删除时间: ${data.deleted_at}</li>
+            ${data.growth_cycles.length === 0  ?
+              ""
+              :
+              data.growth_cycles.map((cycle, index)=>{
+                return `
+              <div class="data-list-container">
+                <h2> 生长周期 ${index +1} </h2>
+                <ul>
+                <li>日子: ${cycle.day}</li>
+                <li>max_日子: ${cycle.max_day}</li>
+                <li>min_日子: ${cycle.min_day}</li>
+                <li>循环: ${cycle.cycle}</li>
+                <li>创建时间: ${cycle.created_at}</li>
+                <li>更新时间: ${cycle.updated_at}</li>
+                <li>删除时间: ${cycle.deleted_at}</li>
+             
+                ${cycle.cycle_thresholds.length === 0 ?
+                ""
+                :
+                cycle.cycle_thresholds.map((threshold, i)=>{
+                  return`
+                  <div class="data-list-container">
+                  <h2>阈值 ${index +1} - ${i+1}</h2>
+                  <ul>
+                        <li>光强度_h: ${threshold.light_intensity_h}</li>
+                        <li>光强度_l: ${threshold.light_intensity_l}</li>
+                        <li>光照时间_h: ${threshold.light_time_h}</li>
+                        <li>光照时间_l: ${threshold.light_time_l}</li>
+                        <li>温度_h: ${threshold.temp_h}</li>
+                        <li>温度_l: ${threshold.temp_l}</li>
+                        <li>湿度_h: ${threshold.humidity_h}</li>
+                        <li>湿度_l: ${threshold.humidity_l}</li>
+                        <li>voc_h: ${threshold.voc_h}</li>
+                        <li>voc_l: ${threshold.voc_l}</li>
+                        <li>pm2_5_h: ${threshold.pm2_5_h}</li>
+                        <li>pm2_5_l: ${threshold.pm2_5_l}</li>
+                        <li>pm10_h: ${threshold.pm10_h}</li>
+                        <li>pm10_l: ${threshold.pm10_l}</li>
+                        <li>ch2o_h: ${threshold.ch2o_h}</li>
+                        <li>ch2o_l: ${threshold.ch2o_l}</li>
+                        <li>co2_h: ${threshold.co2_h}</li>
+                        <li>co2_l: ${threshold.co2_l}</li>
+                        <li>土壤温度_h: ${threshold.soil_temp_h}</li>
+                        <li>土壤温度_l: ${threshold.soil_temp_l}</li>
+                        <li>土壤湿度_h: ${threshold.soil_humidity_h}</li>
+                        <li>土壤湿度_l: ${threshold.soil_humidity_l}</li>
+                        <li>soil_ec_h: ${threshold.soil_ec_h}</li>
+                        <li>soil_ec_l: ${threshold.soil_ec_l}</li>
+                        <li>土壤ph_h: ${threshold.soil_ph_h}</li>
+                        <li>土壤ph_l: ${threshold.soil_ph_l}</li>
+                        <li>soil_an_h: ${threshold.soil_an_h}</li>
+                        <li>soil_an_l: ${threshold.soil_an_l}</li>
+                        <li>soil_tn_h: ${threshold.soil_tn_h}</li>
+                        <li>soil_tn_l: ${threshold.soil_tn_l}</li>
+                        <li>soil_ap_h: ${threshold.soil_ap_h}</li>
+                        <li>soil_ap_l: ${threshold.soil_ap_l}</li>
+                        <li>soil_ak_h: ${threshold.soil_ak_h}</li>
+                        <li>soil_ak_l: ${threshold.soil_ak_l}</li>
+                        <li>创建时间: ${threshold.created_at}</li>
+                        <li>更新时间: ${threshold.updated_at}</li>
+                        <li>删除时间: ${threshold.deleted_at}</li>
+                      </ul>
+                      </div>
+                  `
+                })
+                }
+              </ul>
+              </div>
+                `
+              })
+              }
+          </div>
+            `
+            dragDiv.classList.remove("hidden")
+        }
+        cy.on('click', 'node[type = "subs"]', function(evt){
+              var node = evt.target;
+              var label = node.data().label;
+              var nodes = [];
+              var varieties = [];
+              var category = node.data().category
+              console.log("clicked subs", label)
+              if(category==="fruits"){
+                 nodes = nodesFruits.namesData[label];
+              }else if(category==="vegetables"){
+                 nodes = nodesVegetables.namesData[label]
+              }else if(category==="others"){
+                nodes = nodesOthers.namesData[label]
+              }
+
+              if(showNamesList[category].names.includes(label)){
+                
+                nodes.forEach(item =>{
+                  const removeId = item.data.id;
+                  cy.remove(`#${removeId}`)
+                })
+                showNamesList[category].varieties.forEach(item =>{
+                  item.forEach(item2=>{
+                        const removeId = item2.data.id;
+                         cy.remove(`#${removeId}`)
+                  })
+                })
+
+                showNamesList[category].names = showNamesList[category].names.filter(item => item !== label);
+                // console.log(  showNamesList[category].names.filter(item => item !== label))
+                // console.log(showNamesList[category].names)
+                showNamesList[category].varieties = []
+                
+                console.log("delete names",showNamesList)
+
+                refreshLayout();
+              }else{
+                cy.add(nodes);
+                showNamesList[category].names.push(label);
+                console.log("add names",showNamesList)
+                refreshLayout();
+              }
+
+          console.log( 'clicked ' + node.id() + node.data().label );
+        });
+        cy.on('click', 'node[type = "names"]', function(evt){
+              var node = evt.target;
+              var label = node.data().label;
+              var nodes = [];
+              var category = node.data().category;
+              let popupData={};
+              if(category==="fruits"){
+                 nodes = nodesFruits.varietiesData[label];
+                 type="水果"
+              }else if(category==="vegetables"){
+                 nodes = nodesVegetables.varietiesData[label];
+                 type="蔬菜"
+              }else if(category==="others"){
+                nodes = nodesOthers.varietiesData[label];
+                type="粮油米面"
+              }
+
+              if(showNamesList[category].varieties.includes(label)){
+                showNamesList = showNamesList[category].varieties.filter(item => item !== label);
+                nodes.forEach(item =>{
+                  const removeId = item.data.id;
+                  cy.remove(`#${removeId}`)
+                })
+                refreshLayout();
+              }else{
+                showNamesList[category].varieties.push(nodes);
+                console.log("add vars",showNamesList)
+                cy.add(nodes);
+                refreshLayout();
+                // popupContent(type, label, "品类")
+                
+              }
+
+          console.log( 'clicked ' + node.id() + node.data().label );
+        });
+        cy.on('click', 'node[type = "varieties"]', function(evt){
+              var node = evt.target;
+              var label = node.data().label;
+              var category = node.data().category;
+              if(category==="fruits"){
+                 type="水果"
+              }else if(category==="vegetables"){
+                 type="蔬菜"
+              }else if(category==="others"){
+                type="粮油米面"
+              }
+              fetch(`https://iot-admin.meseeagro.com/plant_big_data/api/v1/search?plant_name=${label}`)
+             .then(res=> res.json())
+             .then(data=> {
+              console.log(data);
+              popupContent(type, label, "品种", data.data)
+            })
+             .catch(err=> console.log("error by catch", err))
+               
+
+          console.log( 'clicked ' + node.id() + node.data().label );
+        });
+
+       //chanche style for clicked node
+        cy.on('click', 'node', function(event){
+          var clickedNode = event.target;
+      
+          var otherNodes = cy.nodes().filter((ele)=>  ele.id() !== clickedNode.id())
+          var relativeEdge = cy.$(`#${ clickedNode.data().edgeId }`)
+          var otherEdges = cy.edges().filter((ele)=> ele.id() !== relativeEdge.id())
+           clickedNode.style({
+            'background-color': '#FFF',
+            'color': '#FFF'
+           });
+           relativeEdge.style({
+              'line-color': '#0af',
+            })
+           otherNodes.style({
+            'background-color': '#888', //dark
+            'color': '#888', //dark
+           })
+           otherEdges.style({
+            'line-color': '#888',
+           })
+        cy.on('mouseover', 'node', function(event) {
+           event.target.style('cursor', 'pointer');
+  });})
+
+  
+
+
+
+  // Restore default cursor when mouse leaves the node
+  cy.on('mouseout', 'node', function(event) {
+    event.target.style('cursor', 'default');
+  });
+
+
+
+       cy.on("zoom", (e)=>{
+        // console.log(cy.zoom())
+        if(cy.zoom() > 0.4){
+          cy.nodes().style('color', 'white');
+        }else{
+          cy.nodes().style('color', 'black');
+        }
+        // console.log(cy.zoom())
+       });
+       function addFlag (category, color){
+        cy.nodeHtmlLabel([
+        {query: `#${category}`,
+        valign: "center",
+        halign: "center",
+        valignBox: "center",
+        halignBox: "center",
+        backgroundColor:"blue",
+        tpl: function(data) {
+             return `<i class="fa-solid fa-flag" style="color:${color} ; font-size: 14px;"></i>`
+
+        }},])
+       }
+       addFlag("fruits","#761e50")
+       addFlag("vegetables","#286d1d")
+       addFlag("others","#cdb57e")
+       const removePopup = document.getElementById("compress-remove");
+        removePopup.addEventListener("click",()=>{
+          dragDiv.classList.add('hidden');
+        })
+       dragElement(document.getElementById("mydiv2"), "mydiv2header2");
+       dragElement(document.getElementById("mydiv"), "mydivheader");
+      function dragElement(elmnt, headerId) {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        if (document.getElementById(headerId)) {
+          // if present, the header is where you move the DIV from:
+          document.getElementById(headerId).onmousedown = dragMouseDown;
+        } else {
+          // otherwise, move the DIV from anywhere inside the DIV:
+          elmnt.onmousedown = dragMouseDown;
+        }
+
+        function dragMouseDown(e) {
+          e = e || window.event;
+          e.preventDefault();
+          // get the mouse cursor position at startup:
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          document.onmouseup = closeDragElement;
+          // call a function whenever the cursor moves:
+          document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+          e = e || window.event;
+          e.preventDefault();
+          // calculate the new cursor position:
+          pos1 = pos3 - e.clientX;
+          pos2 = pos4 - e.clientY;
+          pos3 = e.clientX;
+          pos4 = e.clientY;
+          // set the element's new position:
+          elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+          elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+          // stop moving when mouse button is released:
+          document.onmouseup = null;
+          document.onmousemove = null;
+        }
+      }
+      //centers events
+      const centerBtn = document.getElementById("center-btn");
+        centerBtn.addEventListener("click",()=>{
+          cy.center()
+          cy.zoom(1.2)
+        });
+      //exports events
+      const exportPNG = document.getElementById("export-png");
+        exportPNG.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.png();
+          link.download = 'image_filename.png';
+          link.click()
+        })
+        const exportJPG = document.getElementById("export-jpg");
+        exportPNG.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.jpg();
+          link.download = 'image_filename.jpg';
+          link.click()
+        })
+        const exportJSON = document.getElementById("export-json");
+        exportJSON.addEventListener("click",()=>{
+          let link = document.createElement("a");
+          link.href = cy.json();
+          link.download = 'image_filename.json';
+          link.click()
+        })
+        const compassUp = document.getElementById("compass-up");
+  const compassDown = document.getElementById("compass-down")
+  const compassLeft = document.getElementById("compass-left")
+  const compassRight = document.getElementById("compass-right")
+  compassUp.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX, y: currentY-20});
+  })
+  compassDown.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX, y: currentY+20});
+  })
+  compassLeft.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX-20, y: currentY});
+  })
+  compassRight.addEventListener("click", ()=>{
+    var currentX = cy.pan().x;
+    var currentY = cy.pan().y;
+    cy.pan({x: currentX+20, y: currentY});
+  })
+      </script>
+</body>
+</html>

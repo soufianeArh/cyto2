@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js" integrity="sha512-RcuA+PEnJcg1caTn53YLhZ3bYVFXphzcPL1BjBoAwFiA3bErav+AndZz1xrqpAtv/8Waep2X+9zn8KWpwacUSA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <style>
+            #cy {
+  width: 400px;
+  height: 400px;
+  display: block;
+}
+      </style>
+</head>
+<body>
+      <h1>ejs cytoscape</h1>
+      <button id="btn">click me</button>
+      <div id="cy"></div>
+      <script >
+            console.log(document.getElementById("cy"))
+            var cy = cytoscape({
+
+container: document.getElementById('cy'), // container to render in $('#cy')
+
+elements: [ // list of graph elements to start with
+  { // node a
+    data: { id: 'a' }
+  },
+  { // node b
+    data: { id: 'b' }
+  },
+  { // edge ab
+    data: { id: 'ab', source: 'a', target: 'b' }
+  }
+],
+
+style: [ // the stylesheet for the graph
+  {
+    selector: 'node',
+    style: {
+      'background-color': '#666',
+      'label': 'data(id)'
+    }
+  },
+
+  {
+    selector: 'edge',
+    style: {
+      'width': 3,
+      'line-color': '#F00',
+      'target-arrow-color': '#ccc',
+      'target-arrow-shape': 'triangle',
+      'curve-style': 'bezier'
+    }
+  }
+],
+
+layout: {
+  name: 'grid',
+  rows: 1
+}
+
+});
+      cy.add([
+      { group: 'nodes', data: { id: 'n0', weight: 60}, position: { x: 100, y: 100 } },
+      { group: 'nodes', data: { id: 'n1', weight: 40}, position: { x: 200, y: 200 } },
+      { group: 'edges', data: { id: 'e0', source: 'n0', target: 'n1' } }
+      ]);
+      // var edge = cy.$("#e0")
+      // edge.move({
+      //  target: 'a'
+      // });
+      const a = cy.$("#a");
+      const ed = cy.$("#e0");
+      cy.$('#a').select();
+
+      const btn = document.getElementById("btn")
+      btn.addEventListener("click",()=>{
+        layout.run();
+      })
+      </script>
+</body>
+</html>
