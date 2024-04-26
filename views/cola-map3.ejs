@@ -103,14 +103,12 @@
           <!-- <iframe src="https://www.bing.com/images/search?q=drone&qs=n&form=QBIR&sp=-1&lq=0&pq=dro&sc=10-3&cvid=EB24BF58D4D2420BBFE274C0AAB49E62&ghsh=0&ghacc=0&first=1" width="100%" height="100%" frameborder="0"></iframe> -->
         </div>
       </div>
-     
         <div id="side-contact-popup"  class="side-popup side-ads-popup side-contact-popup hidden ">
           <div class="side-dim">
           <div class="delete-bar" ><i id="close-contact" class="fa-solid fa-rectangle-xmark"></i></div>
            <img width="100%" height="100%" src="http://localhost:3000/images/card2.png"/>
           </div>
         </div>
-      
       <div id="mydiv" class="hidden">
         <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
         <div id="mydivheader">
@@ -187,15 +185,17 @@
                 <div id="compass-right"><i id="direction" class="fa-solid fa-right-long"></i></div>
               </div>
             </button>
-         
-    
       </main>
       <script>
         var nodesFruits =JSON.parse(`<%-JSON.stringify(nodesFruits)%>`);
         var nodesVegetables =JSON.parse(`<%-JSON.stringify(nodesVegetables)%>`);
         var nodesOthers =JSON.parse(`<%-JSON.stringify(nodesOthers)%>`);
       </script>
-      <script type="text/javascript" src="scripts/test.js">
-      </script>
-    
+      <script type="text/javascript" src="scripts/data.js"></script>
+      <script type="text/javascript" src="scripts/utils.js"></script>
+      <script type="text/javascript" src="scripts/dom-elements.js"></script>
+      <script type="text/javascript" src="scripts/setup.js"></script>
+      <script type="text/javascript" src="scripts/event-plain.js"></script>
+      <script type="text/javascript" src="scripts/event-cyto.js"></script>
+
 <%- include('partials/cytoFooter') %>
