@@ -13,10 +13,6 @@ import bcrypt from "bcrypt";
 import { validateRegister, validateLogin } from "./utils/validator.js";
 import env from "dotenv"
 
-// axios.get("https://iot-admin.meseeagro.com/plant_big_data/api/v1/search?plant_name=辣椒")
-//  .then(res=> res.data)
-// .then(data=> console.log(data))
-// .catch(err=> console.log("error by catch", err))
 
 const app = express();
 const port = 3000;
@@ -54,70 +50,6 @@ const db2 = new pg.Client({
 });
 db2.connect();
 
-app.get("/mindmap", (req, res) => {
-  const mindmapData = {
-    id: 1,
-    content: "Root Node",
-    children: [
-      {
-        id: 2,
-        content: "Child Node 1",
-        children: [
-          {
-            id: 3,
-            content: "Grandchild Node 1",
-            children: [],
-          },
-          {
-            id: 4,
-            content: "Grandchild Node 2",
-            children: [],
-          },
-        ],
-      },
-      {
-        id: 5,
-        content: "Child Node 2",
-        children: [],
-      },
-    ],
-  };
-  res.render("mindmap.ejs", { data: "fronm ejs" });
-});
-
-// app.get("/",(req, res)=>{
-//   db.query("SELECT * FROM nodes", (err, result)=>{
-//     if(err){
-//       console.log(err)
-//     }else{
-//       let countries = [];
-//       for(let i=0; i<result.rows.length; i++){
-//         countries.push(result.rows[i].country_code)
-//       }
-//       console.log(countries)
-//       res.render("index.ejs", {countries, total:countries.length})
-//     };
-//   //  db.end()
-//   });
-//   });
-
-app.post("/add", (req, res) => {
-  const country = req.body.country;
-  console.log(country);
-});
-
-app.get("/cytoscape", (req, res) => {
-  res.render("cytoscape.ejs");
-});
-app.get("/mermaid", (req, res) => {
-  res.render("mindmap.ejs");
-});
-app.get("/main-map", (req, res) => {
-  res.render("main-map.ejs");
-});
-app.get("/cola-map", (req, res) => {
-  res.render("cola-map.ejs");
-});
 app.get("/cola-map1", (req, res) => {
   db.query("SELECT * FROM fruits", (err, result) => {
     if (err) {
@@ -169,10 +101,15 @@ app.get("/register", (req, res) => {
     confirm: "",
   });
 });
-// app.post("/login", passport.authenticate("local", {
-//   successRedirect: "/",
-//   failureRedirect: "/login",
-// }));
+app.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/login");
+    }
+  });
+});
 app.post("/login", async (req, res) => {
   const { errCount, errors } = validateLogin(req.body);
   if (errCount === 0) {
@@ -221,7 +158,6 @@ app.post("/login", async (req, res) => {
     });
   }
 });
-
 app.post("/register", async (req, res) => {
   const { errCount, errors } = validateRegister(req.body);
   console.log(typeof errCount, errors);
@@ -264,7 +200,6 @@ app.post("/register", async (req, res) => {
     res.render("register.ejs", { ...errors, ...req.body });
   }
 });
-
 app.get("/cola-map2", (req, res) => {
   db.query("SELECT * FROM fruits", (err, result) => {
     if (err) {
@@ -298,15 +233,6 @@ app.get("/cola-map2", (req, res) => {
     }
   });
 });
-app.get("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/login");
-    }
-  });
-});
 app.get("/", async (req, res) => {
   console.log(req.body);
   console.log("is authenticates", req.isAuthenticated(), req.user);
@@ -321,7 +247,6 @@ app.get("/", async (req, res) => {
       const others = await db.query(
         " SELECT * FROM food WHERE category='粮油米面' "
       );
-      // 热带水果/柑橘类/浆果类/瓜果类/核果仁果类
       let nodesFruits = {
         category: {
           data: { id: "fruits", parent: "parentBread", label: "水果" },
@@ -521,28 +446,4 @@ passport.deserializeUser((user, cb) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-// let namesData = {};
-// let label = "mango"
-// let sub="a"
-// namesData[label] = [1,2,3,4]
-// console.log(namesData[sub])
 
-// function reverse(str){
-//   let reverseStr = ""
-//   for(let i=0; i<str.length; i++){
-//     var indexAdd = str.length - i -1
-//     console.log(indexAdd)
-//     reverseStr += str[indexAdd]
-//   }
-//   return console.log(reverseStr)
-// };
-// reverse("abcd")  //adba
-// function addUpTo (n){
-//   let result = 0;
-//   for(let i = 0; i <= n; i++){
-//     result += n-i
-//   }
-//   return console.log(result);
-// }
-
-// addUpTo(5)
