@@ -1,7 +1,4 @@
-logoutBtn.addEventListener("click", () => {
-      console.log("logout");
-      fetch("http://localhost:3000/logout");
-    });
+
     headerSearch2.addEventListener("click", () => {
       console.log("headerSearch2 clicked", headerInput2.value);
       if (nodesFruits.varietiesData[headerInput2.value]) {
@@ -45,14 +42,14 @@ logoutBtn.addEventListener("click", () => {
       link.click();
     });
     
-    exportJSON.addEventListener("click", () => {
-      let link = document.createElement("a");
-      link.href = cy.json({
-            elements: cy.elements()
-      });
-      link.download = "image_filename.json";
-      link.click(true);
-    });
+    // exportJSON.addEventListener("click", () => {
+    //   let link = document.createElement("a");
+    //   link.href = cy.json({
+    //         elements: cy.elements()
+    //   });
+    //   link.download = "image_filename.json";
+    //   link.click(true);
+    // });
     
     compassUp.addEventListener("click", () => {
       var currentX = cy.pan().x;
