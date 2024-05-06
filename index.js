@@ -12,6 +12,8 @@ import { Strategy } from "passport-local";
 import bcrypt from "bcrypt";
 import { validateRegister, validateLogin } from "./utils/validator.js";
 import env from "dotenv"
+import WeixinStrategy from "passport-wechat"
+
 
 
 const app = express();
@@ -201,7 +203,14 @@ app.post("/register", async (req, res) => {
     res.render("register.ejs", { ...errors, ...req.body });
   }
 });
+app.get("/auth/wechat",passport.authenticate("wechat"))
+app.get("/auth/wechat/secrets",   passport.authenticate('wechat',
+{ 
+  successRedirect: '/',
+  failureRedirect: '/login',
+}),)
 app.get("/cola-map2", (req, res) => {
+
   db.query("SELECT * FROM fruits", (err, result) => {
     if (err) {
       console.log("err fetching fruits");
@@ -403,7 +412,20 @@ app.get("/", async (req, res) => {
     res.redirect("/login");
   }
 });
-
+passport.use("wechat", new WeixinStrategy({
+  appID: 'wx721a77739f7884f7',
+  appSecret: '461c03a0c217cd1ee9c6af1ff0c5ecf4',
+  //  callbackURL:"http://localhost:3000/auth/wechat/secrets",
+  callbackURL:"https://cyto.meseeagro.com/auth/wechat/secrets",
+  // requireState: false,
+  // authorizationURL: 'https://open.weixin.qq.com/connect/oauth2/authorize',
+  scope: 'snsapi_userinfo'
+},
+  function(accessToken, refreshToken, profile, done){
+    console.log(profile)
+    done(null, profile)
+  }
+))
 passport.use(
   new Strategy(async function verify(username, password, cb) {
     console.log("hello strategy");
