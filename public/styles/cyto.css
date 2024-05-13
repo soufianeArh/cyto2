@@ -403,6 +403,11 @@ i#direction:hover {
 .popup p:hover {
   color: beige;
 }
+#chart-container{
+  position: absolute;
+  right: 0;
+  bottom:0;
+}
 /* .header-item-user .popup {
   position: absolute;
   display: block;
