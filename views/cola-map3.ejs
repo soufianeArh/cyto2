@@ -278,14 +278,28 @@ var chart = JSC.chart('chart-container', {
     } 
   ] 
 }); 
-
+const dates = [
+    '2023-12-29',
+    '2023-12-30',
+    '2023-12-31',
+    '2024-01-01',
+    '2024-01-02']
 const dateSlider = document.getElementById('dateSlider');
 noUiSlider.create(dateSlider, {
-    start: [20, 80],
+    start: [2, 3],
     connect: true,
+    tooltips: [true, true],
     range: {
         'min': 0,
-        'max': 100
+        'max': 5
+    },
+    format: {
+        to: function(value) {
+            return dates[Math.round(value)]; // Display the date corresponding to the value
+        },
+        from: function(value) {
+            return dates.indexOf(value); // Convert date to value
+        }
     }
 });
 
