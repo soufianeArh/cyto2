@@ -271,19 +271,74 @@ var chart = JSC.chart('chart-container', {
         ['5/1/2024', 56.9], 
         ['5/2/2024', 56.5], 
         ['5/3/2024', 56.4], 
-        ['5/4/2024', 56.2], 
-        ['5/5/2024', 75.0], 
-        ['5/6/2024', 56.0] 
+        ['5/4/2024', 56.2],
+        ['5/5/2024', 75.0],
+        ['5/6/2024', 56.0]
       ] 
     } 
   ] 
 }); 
+//access all data
+let pageCount = 1;
+fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-05-9&end_date=2024-05-13")
+.then(response => response.json())
+.then(async (data)=>{
+  if(data.message==="success"){
+    console.log("succses", data.data.last_page)
+  while(pageCount <= data.data.last_page){
+   console.log("pageCount", pageCount)
+    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-05-9&end_date=2024-05-13`)
+   const data = await response.json()
+    console.log(
+      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-05-9&end_date=2024-05-13`,
+       data
+       )
+    pageCount++
+    // fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2024-05-9&end_date=2024-05-13`)
+    // .then(response => response.json())
+    // .then(data=> {
+    //   console.log(data);
+    //   pageCount++;
+    // }
+    // )
+  }
+}});
+
+
+let series_middle =  [{
+      name: 'Liaoning market',
+      points: [
+        ['5/1/2024', 29.9],
+        ['5/2/2024', 97.5],
+      ]
+    },{
+      name: 'Other market',
+      points: [
+        ['5/1/2024', 29.9],
+        ['5/2/2024', 97.5],
+      ]
+    } ];
+    let series_hight =  [{
+      name: 'Liaoning market',
+      points: [
+        ['5/1/2024', 29.9],
+        ['5/2/2024', 97.5],
+      ]
+    },{
+      name: 'Other market',
+      points: [
+        ['5/1/2024', 29.9],
+        ['5/2/2024', 97.5],
+      ]
+    } ];
 const dates = [
     '2023-12-29',
     '2023-12-30',
     '2023-12-31',
     '2024-01-01',
-    '2024-01-02']
+    '2024-01-02'
+  ];
+
 const dateSlider = document.getElementById('dateSlider');
 noUiSlider.create(dateSlider, {
     start: [2, 3],
