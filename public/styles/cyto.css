@@ -406,8 +406,21 @@ i#direction:hover {
 #chart-container{
   position: absolute;
   right: 0;
-  bottom:0;
+  bottom:100%;
 }
+#dateSlider {
+  margin-top: 20px;
+  width: 100%;height: 6px;
+}
+/* #timeSlider {
+  margin: 20px;
+  width: 800px;
+}
+.rangeslider__handle {
+  text-align: center;
+  line-height: 2em;
+} */
+
 /* .header-item-user .popup {
   position: absolute;
   display: block;

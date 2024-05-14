@@ -170,7 +170,35 @@
                 <div id="compass-right"><i id="direction" class="fa-solid fa-right-long"></i></div>
               </div>
             </button>
-            <div id="chart-container" style="width: 100%; height: 400px;"></div>
+            <!-- <div id="timeSlider"  style="width: 100px; height: 100px;"></div> -->
+            <!-- <input type="range" id="timeSlider" value="0" min="0" max="300" step="1"> -->
+            <div id="dateSlider"></div>
+            <div id="chart-container" style="width: 80%; height: 200px;"></div>
+
+            <!-- <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                  <div class="carousel-item active" data-period="May">
+                      <div class="d-block w-100" style="background-color: #ddd; height: 100px;">Show May Data</div>
+                  </div>
+                  <div class="carousel-item" data-period="AprMar">
+                      <div class="d-block w-100" style="background-color: #bbb; height: 100px;">Show Apr-Mar Data</div>
+                  </div>
+                  <div class="carousel-item" data-period="UntilDec2023">
+                      <div class="d-block w-100" style="background-color: #999; height: 100px;">Show Until Dec 2023 Data</div>
+                  </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+          </div> -->
+            <!-- <button onclick="updateChart('May')">Show May Data</button>
+            <button onclick="updateChart('AprMar')">Show Apr-Mar Data</button>
+            <button onclick="updateChart('UntilDec2023')">Show Until Dec 2023 Data</button> -->
        </main>
       <script>
         // JS 
@@ -180,14 +208,21 @@ var chart = JSC.chart('chart-container', {
   legend_visible: false, 
   xAxis: { 
     crosshair_enabled: true, 
-    scale: { type: 'time' } 
+    scale: { type: 'time',
+    advanced: {
+                    rangeSelector: {
+                        enabled: true,
+                        from: '2023-12-29',
+                        to: "2024-05-13"
+                    }
+                } } 
   }, 
-  yAxis: { 
-    orientation: 'opposite', 
+  yAxis: {
+    orientation: 'opposite',
     formatString: 'c'
-  }, 
-  defaultSeries: { 
-    firstPoint_label_text: '<b>%seriesName</b>', 
+  },
+  defaultSeries: {
+    firstPoint_label_text: '<b>%seriesName</b>',
     defaultPoint_marker: { 
       type: 'circle', 
       size: 8, 
@@ -200,49 +235,63 @@ var chart = JSC.chart('chart-container', {
     { 
       name: 'Purchases', 
       points: [ 
-        ['1/1/2020', 29.9], 
-        ['2/1/2020', 97.5], 
-        ['3/1/2020', 110.4], 
-        ['4/1/2020', 129.2], 
-        ['5/1/2020', 144.0], 
-        ['6/1/2020', 176.0] 
+        ['5/1/2024', 29.9],
+        ['5/2/2024', 97.5],
+        ['5/3/2024', 110.4],
+        ['5/4/2024', 129.2],
+        ['5/5/2024', 144.0],
+        ['5/6/2024', 176.0]
       ] 
     }, 
     { 
       name: 'Taxes', 
       points: [ 
-        ['1/1/2020', 86.9], 
-        ['2/1/2020', 79.5], 
-        ['3/1/2020', 95.4], 
-        ['4/1/2020', 97.2], 
-        ['5/1/2020', 123.0], 
-        ['6/1/2020', 111.0] 
+        ['5/1/2024', 86.9], 
+        ['5/2/2024', 79.5], 
+        ['5/3/2024', 95.4], 
+        ['5/4/2024', 97.2], 
+        ['5/5/2024', 123.0], 
+        ['5/6/2024', 111.0] 
       ] 
     }, 
     { 
       name: 'Supplies', 
       points: [ 
-        ['1/1/2020', 129.9], 
-        ['2/1/2020', 111.5], 
-        ['3/1/2020', 66.4], 
-        ['4/1/2020', 29.2], 
-        ['5/1/2020', 88.0], 
-        ['6/1/2020', 102.0] 
+        ['5/1/2024', 129.9], 
+        ['5/2/2024', 111.5], 
+        ['5/3/2024', 66.4], 
+        ['5/4/2024', 29.2], 
+        ['5/5/2024', 88.0], 
+        ['5/6/2024', 102.0] 
       ] 
     }, 
     { 
       name: 'Rent', 
       points: [ 
-        ['1/1/2020', 56.9], 
-        ['2/1/2020', 56.5], 
-        ['3/1/2020', 56.4], 
-        ['4/1/2020', 56.2], 
-        ['5/1/2020', 75.0], 
-        ['6/1/2020', 56.0] 
+        ['5/1/2024', 56.9], 
+        ['5/2/2024', 56.5], 
+        ['5/3/2024', 56.4], 
+        ['5/4/2024', 56.2], 
+        ['5/5/2024', 75.0], 
+        ['5/6/2024', 56.0] 
       ] 
     } 
   ] 
 }); 
+
+const dateSlider = document.getElementById('dateSlider');
+noUiSlider.create(dateSlider, {
+    start: [20, 80],
+    connect: true,
+    range: {
+        'min': 0,
+        'max': 100
+    }
+});
+
+
+
+
         var nodesFruits =JSON.parse(`<%-JSON.stringify(nodesFruits)%>`);
         var nodesVegetables =JSON.parse(`<%-JSON.stringify(nodesVegetables)%>`);
         var nodesOthers =JSON.parse(`<%-JSON.stringify(nodesOthers)%>`);
