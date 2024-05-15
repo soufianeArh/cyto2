@@ -219,45 +219,8 @@
 //     } ];
 
 //access all data
-let pageCount = 1;
-let allData=[];
-fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2024-04-9&end_date=2024-05-13")
-.then(response => response.json())
-.then(async (data)=>{
-  if(data.message==="success"){
-    console.log("succses", data.data.last_page)
-    //concat allData
-  while(pageCount <= data.data.last_page){
-   console.log("pageCount", pageCount)
-    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2024-04-9&end_date=2024-05-13`)
-   const data = await response.json()
-    console.log(
-      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-05-9&end_date=2024-05-13`,
-       data
-       );
-      allData = allData.concat(data.data.data);
-    pageCount++
-  }
-  //aggregate data
-  let aggregatedData = {};
-  allData.forEach(item =>{
-    const { report_time, market, highest_price } = item;
-    if(!aggregatedData[market]){
-      aggregatedData[market] = []
-    }
-      aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
-  });
-  console.log("agg",aggregatedData)
-  //formt series to add to chart
-  let series_high = [];
-  for (const market in aggregatedData) {
-        series_high.push({
-            name: market,
-            points: aggregatedData[market]
-        });
-    }
-   console.log("ser",series_high)
-    var chart = JSC.chart('chart-container', { 
+function updateChart(options){
+   JSC.chart('chart-container', { 
   debug: true, 
   type: 'line spline', 
   legend_visible: false, 
@@ -286,18 +249,59 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2024-
     } 
   }, 
   title_label_text: 'Costs (Last 6 Months)', 
-  series: series_high
+  series: options
 }); 
+}
+let pageCount = 1;
+let allData=[];
+let series_high = [];
+fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-12-19&end_date=2024-05-15")
+.then(response => response.json())
+.then(async (data)=>{
+  if(data.message==="success"){
+    console.log("succses", data.data.last_page)
+    //concat allData
+  while(pageCount <= data.data.last_page){
+   console.log("pageCount", pageCount)
+    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`)
+   const data = await response.json()
+    console.log(
+      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`,
+       data
+       );
+      allData = allData.concat(data.data.data);
+    pageCount++
+  }
+  //aggregate data
+  let aggregatedData = {};
+  allData.forEach(item =>{
+    const { report_time, market, highest_price } = item;
+    if(!aggregatedData[market]){
+      aggregatedData[market] = []
+    }
+      aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
+  });
+  console.log("agg",aggregatedData)
+  //formt series to add to chart
+ 
+  for (const market in aggregatedData) {
+        series_high.push({
+            name: market,
+            points: aggregatedData[market]
+        });
+    }
+   console.log("ser",series_high)
+  updateChart(series_high)
  }});
- const startDate = new Date('2023-12-16');
-const endDate = new Date();
-const dates = [
-    '2023-12-29',
-    '2023-12-30',
-    '2023-12-31',
-    '2024-01-01',
-    '2024-01-02'
-  ];
+//  const startDate = new Date('2023-12-16');
+// const endDate = new Date();
+// const dates = [
+//     '2023-12-29',
+//     '2023-12-30',
+//     '2023-12-31',
+//     '2024-01-01',
+//     '2024-01-02'
+//   ];
 
 const dateSlider = document.getElementById('dateSlider');
 noUiSlider.create(dateSlider, {
@@ -319,9 +323,21 @@ noUiSlider.create(dateSlider, {
     }
 });
 dateSlider.noUiSlider.on('change', function(values, handle) {
-    // 'values' contains the current values of all handles
-    // 'handle' is the index of the handle that caused the event
-    console.log('Slider values updated:', values);
+    //get the data of that specific time
+    //['2024-04-11', '2024-05-15']
+    const startDate = new Date(values[0]);
+const endDate = new Date(values[1]);
+const filteredData = series_high.map(market => {
+    return {
+        name: market.name,
+        points: market.points.filter(point => {
+            const pointDate = new Date(point[0]);
+            return pointDate >= startDate && pointDate <= endDate;
+        })
+    };
+});
+updateChart(filteredData)
+
 });
 
 
