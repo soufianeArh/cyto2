@@ -289,7 +289,8 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2024-
   series: series_high
 }); 
  }});
-
+ const startDate = new Date('2023-12-16');
+const endDate = new Date();
 const dates = [
     '2023-12-29',
     '2023-12-30',
@@ -300,23 +301,28 @@ const dates = [
 
 const dateSlider = document.getElementById('dateSlider');
 noUiSlider.create(dateSlider, {
-    start: [2, 3],
+    start: [ new Date('2024-4-19').getTime(), new Date().getTime()],
     connect: true,
     tooltips: [true, true],
     range: {
-        'min': 0,
-        'max': 5
+        'min': new Date('2023-12-19').getTime(),
+        'max': new Date().getTime()
     },
     format: {
-        to: function(value) {
-            return dates[Math.round(value)]; // Display the date corresponding to the value
-        },
-        from: function(value) {
-            return dates.indexOf(value); // Convert date to value
-        }
+      to: function(value) {
+                    const date = new Date(value);
+                    return date.toISOString().split('T')[0];
+                },
+      from: function(value) {
+                    return value;
+                }
     }
 });
-
+dateSlider.noUiSlider.on('change', function(values, handle) {
+    // 'values' contains the current values of all handles
+    // 'handle' is the index of the handle that caused the event
+    console.log('Slider values updated:', values);
+});
 
 
 
