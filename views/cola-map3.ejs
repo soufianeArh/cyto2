@@ -202,7 +202,62 @@
        </main>
       <script>
         // JS 
-var chart = JSC.chart('chart-container', { 
+
+
+// let series_high =  [{
+//       name: '辽宁鞍山宁远农产品批发市场',
+//       points: [
+//         ['5/1/2024', 29.9],
+//         ['5/2/2024', 97.5],
+//       ]
+//     },{
+//       name: '大连双兴商品城有限公司',
+//       points: [
+//         ['5/1/2024', 29.9],
+//         ['5/2/2024', 97.5],
+//       ]
+//     } ];
+
+//access all data
+let pageCount = 1;
+let allData=[];
+fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2024-04-9&end_date=2024-05-13")
+.then(response => response.json())
+.then(async (data)=>{
+  if(data.message==="success"){
+    console.log("succses", data.data.last_page)
+    //concat allData
+  while(pageCount <= data.data.last_page){
+   console.log("pageCount", pageCount)
+    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2024-04-9&end_date=2024-05-13`)
+   const data = await response.json()
+    console.log(
+      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-05-9&end_date=2024-05-13`,
+       data
+       );
+      allData = allData.concat(data.data.data);
+    pageCount++
+  }
+  //aggregate data
+  let aggregatedData = {};
+  allData.forEach(item =>{
+    const { report_time, market, highest_price } = item;
+    if(!aggregatedData[market]){
+      aggregatedData[market] = []
+    }
+      aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
+  });
+  console.log("agg",aggregatedData)
+  //formt series to add to chart
+  let series_high = [];
+  for (const market in aggregatedData) {
+        series_high.push({
+            name: market,
+            points: aggregatedData[market]
+        });
+    }
+   console.log("ser",series_high)
+    var chart = JSC.chart('chart-container', { 
   debug: true, 
   type: 'line spline', 
   legend_visible: false, 
@@ -231,106 +286,10 @@ var chart = JSC.chart('chart-container', {
     } 
   }, 
   title_label_text: 'Costs (Last 6 Months)', 
-  series: [ 
-    { 
-      name: 'Purchases', 
-      points: [ 
-        ['5/1/2024', 29.9],
-        ['5/2/2024', 97.5],
-        ['5/3/2024', 110.4],
-        ['5/4/2024', 129.2],
-        ['5/5/2024', 144.0],
-        ['5/6/2024', 176.0]
-      ] 
-    }, 
-    { 
-      name: 'Taxes', 
-      points: [ 
-        ['5/1/2024', 86.9], 
-        ['5/2/2024', 79.5], 
-        ['5/3/2024', 95.4], 
-        ['5/4/2024', 97.2], 
-        ['5/5/2024', 123.0], 
-        ['5/6/2024', 111.0] 
-      ] 
-    }, 
-    { 
-      name: 'Supplies', 
-      points: [ 
-        ['5/1/2024', 129.9], 
-        ['5/2/2024', 111.5], 
-        ['5/3/2024', 66.4], 
-        ['5/4/2024', 29.2], 
-        ['5/5/2024', 88.0], 
-        ['5/6/2024', 102.0] 
-      ] 
-    }, 
-    { 
-      name: 'Rent', 
-      points: [ 
-        ['5/1/2024', 56.9], 
-        ['5/2/2024', 56.5], 
-        ['5/3/2024', 56.4], 
-        ['5/4/2024', 56.2],
-        ['5/5/2024', 75.0],
-        ['5/6/2024', 56.0]
-      ] 
-    } 
-  ] 
+  series: series_high
 }); 
-//access all data
-let pageCount = 1;
-fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-05-9&end_date=2024-05-13")
-.then(response => response.json())
-.then(async (data)=>{
-  if(data.message==="success"){
-    console.log("succses", data.data.last_page)
-  while(pageCount <= data.data.last_page){
-   console.log("pageCount", pageCount)
-    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-05-9&end_date=2024-05-13`)
-   const data = await response.json()
-    console.log(
-      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-05-9&end_date=2024-05-13`,
-       data
-       )
-    pageCount++
-    // fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2024-05-9&end_date=2024-05-13`)
-    // .then(response => response.json())
-    // .then(data=> {
-    //   console.log(data);
-    //   pageCount++;
-    // }
-    // )
-  }
-}});
+ }});
 
-
-let series_middle =  [{
-      name: 'Liaoning market',
-      points: [
-        ['5/1/2024', 29.9],
-        ['5/2/2024', 97.5],
-      ]
-    },{
-      name: 'Other market',
-      points: [
-        ['5/1/2024', 29.9],
-        ['5/2/2024', 97.5],
-      ]
-    } ];
-    let series_hight =  [{
-      name: 'Liaoning market',
-      points: [
-        ['5/1/2024', 29.9],
-        ['5/2/2024', 97.5],
-      ]
-    },{
-      name: 'Other market',
-      points: [
-        ['5/1/2024', 29.9],
-        ['5/2/2024', 97.5],
-      ]
-    } ];
 const dates = [
     '2023-12-29',
     '2023-12-30',
