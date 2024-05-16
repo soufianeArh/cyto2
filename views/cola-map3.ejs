@@ -282,6 +282,8 @@ let series_high = [];
     }
  }
  const dateSlider = document.getElementById('dateSlider');
+ let currentStartDate = new Date().getTime();
+ let currentEndDate = new Date().getTime();
 //  let startSlider = new Date().getTime()
    console.log("ser",series_high)
    //this fetch is to get the pages cout
@@ -303,16 +305,47 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
        //add fetched to all ?? No need !
       aggregateData(data.data.data);
       formatData()
+      
+      //update slider
+      let newRangeMin = series_high[1].points[series_high[1].points.length - 1][0];
+      console.log("new range min",newRangeMin)
+      //jscharting format MM-DD-YYYY NEED TO CONVERT TO nouislider format YYYY-MM-DD
+      const [month, day, year] = newRangeMin.split('/');
+      console.log(newRangeMin, "covertto", `${year}-${month}-${day}`);
+      let newMinValue =  new Date(`${year}-${month}-${day}`).getTime()
+      dateSlider.noUiSlider.updateOptions({
+         start: [ currentStartDate, currentEndDate],
+    connect: true,
+    tooltips: [true, true],
+      range: {
+        'min': new Date(newMinValue).getTime(),
+       'max': new Date().getTime()
+     },
+     format: {
+      to: function(value) {
+                    // console.log("from to value", value)
+                    const date = new Date(value);
+                    // console.log("from to", date)
+                    return date.toISOString().split('T')[0];
+                },
+      from: function(value) {
+                    return value;
+                }
+    }
+     }, false)
       if(counter===1){
+        
         console.log("series_height11", series_high);
         let startReportTime = series_high[1].points[series_high[1].points.length - 1][0]
-        console.log(startReportTime)
-        newStartValue = new Date(startReportTime).getTime();
+        console.log("first chart start date",startReportTime)
+        const [month, day, year] = startReportTime.split('/');
+        console.log("first chart start date",`${year}-${month}-${day}`);
+        currentStartDate = new Date(`${year}-${month}-${day}`).getTime()
 
-        dateSlider.noUiSlider.set([newStartValue, new Date().getTime()]);
+        dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
 
         updateChart(series_high)
-      }
+       }
       pageCount--
       counter++
   }
@@ -322,19 +355,22 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
 
  }});
 
-
+//init the slider
 
 noUiSlider.create(dateSlider, {
     start: [ new Date().getTime(), new Date().getTime()],
     connect: true,
     tooltips: [true, true],
     range: {
-        'min': new Date('2023-12-19').getTime(),
-        'max': new Date().getTime()
+         //'min': new Date('2023-12-19').getTime(),
+        'min': currentStartDate,
+        'max': currentEndDate
     },
     format: {
       to: function(value) {
+                    // console.log("from to value", value)
                     const date = new Date(value);
+                    // console.log("from to", date)
                     return date.toISOString().split('T')[0];
                 },
       from: function(value) {
@@ -343,6 +379,8 @@ noUiSlider.create(dateSlider, {
     }
 });
 dateSlider.noUiSlider.on('change', function(values, handle) {
+  currentStartDate = new Date(values[0]).getTime();
+  currentEndDate = new Date(values[1]).getTime();
     //get the data of that specific time
     //['2024-04-11', '2024-05-15']
     const startDate = new Date(values[0]);
