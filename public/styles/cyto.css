@@ -410,6 +410,7 @@ i#direction:hover {
 }
 #dateSlider {
   margin-top: 20px;
+  margin-right: 40px;
   width: 100%;height: 6px;
 }
 /* #timeSlider {

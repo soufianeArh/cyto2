@@ -281,6 +281,8 @@ let series_high = [];
     };
     }
  }
+ const dateSlider = document.getElementById('dateSlider');
+//  let startSlider = new Date().getTime()
    console.log("ser",series_high)
    //this fetch is to get the pages cout
 fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-12-19&end_date=2024-05-15")
@@ -302,7 +304,13 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
       aggregateData(data.data.data);
       formatData()
       if(counter===1){
-        console.log("series_height11", series_high)
+        console.log("series_height11", series_high);
+        let startReportTime = series_high[1].points[series_high[1].points.length - 1][0]
+        console.log(startReportTime)
+        newStartValue = new Date(startReportTime).getTime();
+
+        dateSlider.noUiSlider.set([newStartValue, new Date().getTime()]);
+
         updateChart(series_high)
       }
       pageCount--
@@ -313,19 +321,11 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
 
 
  }});
-//  const startDate = new Date('2023-12-16');
-// const endDate = new Date();
-// const dates = [
-//     '2023-12-29',
-//     '2023-12-30',
-//     '2023-12-31',
-//     '2024-01-01',
-//     '2024-01-02'
-//   ];
 
-const dateSlider = document.getElementById('dateSlider');
+
+
 noUiSlider.create(dateSlider, {
-    start: [ new Date('2024-4-19').getTime(), new Date().getTime()],
+    start: [ new Date().getTime(), new Date().getTime()],
     connect: true,
     tooltips: [true, true],
     range: {
