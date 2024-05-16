@@ -252,46 +252,64 @@ function updateChart(options){
   series: options
 }); 
 }
-let pageCount = 1;
+
 let allData=[];
 let series_high = [];
-fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-12-19&end_date=2024-05-15")
-.then(response => response.json())
-.then(async (data)=>{
-  if(data.message==="success"){
-    console.log("succses", data.data.last_page)
-    //concat allData
-  while(pageCount <= data.data.last_page){
-   console.log("pageCount", pageCount)
-    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`)
-   const data = await response.json()
-    console.log(
-      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`,
-       data
-       );
-      allData = allData.concat(data.data.data);
-    pageCount++
-  }
   //aggregate data
   let aggregatedData = {};
-  allData.forEach(item =>{
+  function aggregateData(fetched){
+    fetched.forEach(item =>{
     const { report_time, market, highest_price } = item;
     if(!aggregatedData[market]){
       aggregatedData[market] = []
     }
       aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
   });
+  }
   console.log("agg",aggregatedData)
   //formt series to add to chart
- 
+ function formatData(){
   for (const market in aggregatedData) {
-        series_high.push({
+    let filterArray = series_high.filter(item=> item.name === market)
+    if(filterArray.length > 0){
+      filterArray[0].points = aggregatedData[market];
+    }else{
+      series_high.push({
             name: market,
             points: aggregatedData[market]
         });
+    };
     }
+ }
    console.log("ser",series_high)
-  updateChart(series_high)
+   //this fetch is to get the pages cout
+fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-12-19&end_date=2024-05-15")
+.then(response => response.json())
+.then(async (dataInit)=>{
+  if(dataInit.message==="success"){
+    console.log("succses", dataInit.data.last_page)
+    //concat one data
+    let pageCount = dataInit.data.last_page;
+  while(pageCount > 0){
+    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`)
+   const data = await response.json()
+    console.log(
+      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`,
+       data
+       );
+       //add fetched to all ?? No need !
+      aggregateData(data.data.data);
+      formatData()
+      if(pageCount===dataInit.data.last_page){
+        console.log("series_height11", series_high)
+        updateChart(series_high)
+      }
+      pageCount--
+  }
+  console.log("final agg",aggregatedData );
+  console.log("final series", series_high)
+
+
  }});
 //  const startDate = new Date('2023-12-16');
 // const endDate = new Date();
