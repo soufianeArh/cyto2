@@ -172,7 +172,7 @@
             </button>
             <!-- <div id="timeSlider"  style="width: 100px; height: 100px;"></div> -->
             <!-- <input type="range" id="timeSlider" value="0" min="0" max="300" step="1"> -->
-            <div id="dateSlider"></div>
+            <div id="dateSlider" class="hidden"></div>
             <div id="chart-container" style="width: 80%; height: 200px;"></div>
 
             <!-- <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
@@ -345,6 +345,8 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
         dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
 
         updateChart(series_high)
+        dateSlider.classList.remove("hidden");
+        dateSlider.classList.add("shown")
        }
       pageCount--
       counter++

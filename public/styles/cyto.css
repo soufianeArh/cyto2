@@ -412,6 +412,13 @@ i#direction:hover {
   margin-top: 20px;
   margin-right: 40px;
   width: 100%;height: 6px;
+ 
+}
+.hidden{
+  display: none;
+};
+.shown{
+  display: block
 }
 /* #timeSlider {
   margin: 20px;
