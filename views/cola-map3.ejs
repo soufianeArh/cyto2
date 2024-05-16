@@ -258,7 +258,7 @@ let series_high = [];
   //aggregate data
   let aggregatedData = {};
   function aggregateData(fetched){
-    fetched.forEach(item =>{
+    fetched.reverse().forEach(item =>{
     const { report_time, market, highest_price } = item;
     if(!aggregatedData[market]){
       aggregatedData[market] = []
@@ -290,6 +290,7 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
     console.log("succses", dataInit.data.last_page)
     //concat one data
     let pageCount = dataInit.data.last_page;
+    let counter = 0;
   while(pageCount > 0){
     const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`)
    const data = await response.json()
@@ -300,11 +301,12 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
        //add fetched to all ?? No need !
       aggregateData(data.data.data);
       formatData()
-      if(pageCount===dataInit.data.last_page){
+      if(counter===1){
         console.log("series_height11", series_high)
         updateChart(series_high)
       }
       pageCount--
+      counter++
   }
   console.log("final agg",aggregatedData );
   console.log("final series", series_high)
