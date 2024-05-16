@@ -407,6 +407,7 @@ i#direction:hover {
   position: absolute;
   right: 0;
   bottom:100%;
+  background-color: #495065c4 ;
 }
 #dateSlider {
   margin-top: 20px;
@@ -419,6 +420,11 @@ i#direction:hover {
 };
 .shown{
   display: block
+}
+.jsc_titleText {
+  fill: #333333; /* Title text color */
+  font-size: 24px; /* Title font size */
+  font-weight: bold; /* Title font weight */
 }
 /* #timeSlider {
   margin: 20px;
