@@ -24,6 +24,9 @@ const dragHeaderTitle = document.getElementById("mydivheader-title")
 const dragCtn = document.getElementById("drag-ctn");
 
 const removePopup = document.getElementById("compress-remove");
+const removeChart = document.getElementById("remove-chart");
+const removePrice = document.getElementById("remove-no-price-error");
+
 const centerBtn = document.getElementById("center-btn");
 
 const exportPNG = document.getElementById("export-png");
@@ -33,5 +36,11 @@ const exportJSON = document.getElementById("export-json");
 const compassUp = document.getElementById("compass-up");
 const compassDown = document.getElementById("compass-down")
 const compassLeft = document.getElementById("compass-left")
-const compassRight = document.getElementById("compass-right")
+const compassRight = document.getElementById("compass-right");
+
+const chartContainer = document.getElementById("chart-ctn")
+const dateSlider = document.getElementById('dateSlider');
+const pricePopup = document.getElementById('no-price-popup')
+const priceMessage = document.getElementById('no-price-msg');
+
 

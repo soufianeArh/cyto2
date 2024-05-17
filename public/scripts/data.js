@@ -14,4 +14,9 @@ var showNamesList = {
       fruits:{names:[], varieties:[]},
       vegetables:{names:[], varieties:[]},
       others:{names:[], varieties:[]}
-      }
+      };
+let aggregatedData = {};
+let series_high = [];
+let currentStartDate = new Date().getTime();
+let currentEndDate = new Date().getTime();
+let selectedLabel = ""

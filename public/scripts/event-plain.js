@@ -71,4 +71,10 @@
       var currentY = cy.pan().y;
       cy.pan({ x: currentX + 20, y: currentY });
     });
-    
+
+    removeChart.addEventListener("click",()=>{
+      chartContainer.classList.add("hidden")
+    })
+    removePrice.addEventListener("click",()=>{
+      pricePopup.classList.add("hidden")
+    })

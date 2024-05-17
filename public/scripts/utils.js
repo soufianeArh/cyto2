@@ -203,6 +203,150 @@ function popupContent(type, label, typeIndex, data) {
   dragDiv.classList.remove("hidden");
 }
 
+function aggregateData(fetched){
+  fetched.reverse().forEach(item =>{
+  const { report_time, market, highest_price } = item;
+  if(!aggregatedData[market]){
+    aggregatedData[market] = []
+  }
+    aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
+});
+}
+function formatData(){
+  for (const market in aggregatedData) {
+    let filterArray = series_high.filter(item=> item.name === market)
+    if(filterArray.length > 0){
+      filterArray[0].points = aggregatedData[market];
+    }else{
+      series_high.push({
+            name: market,
+            points: aggregatedData[market]
+        });
+    };
+    }
+ }
+ function updateSlider(){
+  //update slider
+  let newRangeMin = series_high[1].points[series_high[1].points.length - 1][0];
+  console.log("new range min",newRangeMin)
+  //jscharting format MM-DD-YYYY NEED TO CONVERT TO nouislider format YYYY-MM-DD
+  const [month, day, year] = newRangeMin.split('/');
+  console.log(newRangeMin, "covertto", `${year}-${month}-${day}`);
+  let newMinValue =  new Date(`${year}-${month}-${day}`).getTime()
+  dateSlider.noUiSlider.updateOptions({
+     start: [ currentStartDate, currentEndDate],
+connect: true,
+tooltips: [true, true],
+  range: {
+    'min': new Date(newMinValue).getTime(),
+   'max': new Date().getTime()
+ },
+ format: {
+  to: function(value) {
+                // console.log("from to value", value)
+                const date = new Date(value);
+                // console.log("from to", date)
+                return date.toISOString().split('T')[0];
+            },
+  from: function(value) {
+                return value;
+            }
+}, 
+ }, false)
+ }
+
+ function updateChart(options, name){
+  JSC.chart('chart-container', { 
+ debug: true, 
+ type: 'line spline', 
+ defaultCultureName: "zh-CN",
+ legend_visible: false, 
+ defaultPoint_label_autoHide:false,
+ chartArea: {
+               fill: '#BEBFC1'  // Set your desired background color here
+           },
+           outline: {         // Set your desired frame (border) color and style here
+                   color: '#ffffff',  // Frame (border) color
+                   width: 10          // Frame (border) width in pixels
+               }
+             ,
+ xAxis: { 
+   crosshair_enabled: true, 
+   monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+   scale: { 
+     type: 'time',
+     advanced: {
+                   rangeSelector: {
+                       enabled: true,
+                       from: '2023-12-29',
+                       to: "2024-05-13"
+                   }
+               } } 
+   }, 
+ yAxis: {
+   label_text: '价格 (¥)',
+   orientation: 'opposite',
+   formatString: 'a'
+ },
+ defaultSeries: {
+   firstPoint_label_text: '<b>%seriesName</b>',
+   defaultPoint_marker: { 
+     type: 'circle', 
+     size: 8, 
+     fill: 'white', 
+     outline: { width: 2, color: 'currentColor' } 
+   } 
+ }, 
+ title_label_text: `
+ ${name}: 价格从${new Date(currentStartDate).toISOString().split('T')[0]}到${new Date(currentEndDate).toISOString().split('T')[0]}`,
+ series: options,
+
+
+}); 
+}
+
+function initSlider(){
+  noUiSlider.create(dateSlider, {
+    start: [ new Date().getTime(), new Date().getTime()],
+    connect: true,
+    tooltips: [true, true],
+    range: {
+         //'min': new Date('2023-12-19').getTime(),
+        'min': currentStartDate,
+        'max': currentEndDate
+    },
+    format: {
+      to: function(value) {
+                    // console.log("from to value", value)
+                    const date = new Date(value);
+                    // console.log("from to", date)
+                    return date.toISOString().split('T')[0];
+                },
+      from: function(value) {
+                    return value;
+                }
+    },
+});
+dateSlider.noUiSlider.on('change', function(values, handle) {
+  currentStartDate = new Date(values[0]).getTime();
+  currentEndDate = new Date(values[1]).getTime();
+    //get the data of that specific time
+    //['2024-04-11', '2024-05-15']
+    const startDate = new Date(values[0]);
+const endDate = new Date(values[1]);
+const filteredData = series_high.map(market => {
+    return {
+        name: market.name,
+        points: market.points.filter(point => {
+            const pointDate = new Date(point[0]);
+            return pointDate >= startDate && pointDate <= endDate;
+        })
+    };
+});
+updateChart(filteredData, selectedLabel)
+
+});
+}
 
 dragElement(document.getElementById("mydiv2"), "mydiv2header2");
 dragElement(document.getElementById("mydiv"), "mydivheader");

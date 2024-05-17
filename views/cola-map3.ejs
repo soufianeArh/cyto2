@@ -111,19 +111,33 @@
            <!-- <img width="100%" height="100%" src="http://localhost:3000/images/card2.png"/> -->
           </div>
         </div>
+        <div id="chart-ctn" class="chart-ctn hidden">
+          <div id="remove-chart" class=" compress-remove">
+            <i id="close-compress" class="fa-solid fa-rectangle-xmark"></i>
+          </div>
+          <div id="chart-container" style="width: 80%; height: 200px;"></div>
+          <div id="dateSlider"></div>
+        </div>
+        <div id="no-price-popup" class="no-price-popup hidden">
+          <div id="remove-no-price-error" class=" compress-remove">
+            <i id="close-compress" class="fa-solid fa-rectangle-xmark"></i>
+          </div>
+          <div id="no-price-msg"></div>
+        </div>
       <div id="mydiv" class="hidden">
         <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
         <div id="mydivheader">
           <span id="mydivheader-title">点击此处移动</span>
           <div id="compress-btn" class=" compress">
           <i class="fa-solid fa-down-left-and-up-right-to-center"></i>
-        </div>
+         </div>
         <div id="compress-remove" class=" compress-remove">
           <i id="close-compress" class="fa-solid fa-rectangle-xmark"></i>
         </div>
         </div>
+       
         <div id = "drag-ctn" class="drag-ctn">
-           
+         
         </div>
       </div>
       <div id="mydiv2" class="mydiv2">
@@ -172,8 +186,7 @@
             </button>
             <!-- <div id="timeSlider"  style="width: 100px; height: 100px;"></div> -->
             <!-- <input type="range" id="timeSlider" value="0" min="0" max="300" step="1"> -->
-            <div id="dateSlider" class="hidden"></div>
-            <div id="chart-container" style="width: 80%; height: 200px;"></div>
+           
 
             <!-- <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
@@ -201,234 +214,6 @@
             <button onclick="updateChart('UntilDec2023')">Show Until Dec 2023 Data</button> -->
        </main>
       <script>
-        // JS 
-
-
-// let series_high =  [{
-//       name: '辽宁鞍山宁远农产品批发市场',
-//       points: [
-//         ['5/1/2024', 29.9],
-//         ['5/2/2024', 97.5],
-//       ]
-//     },{
-//       name: '大连双兴商品城有限公司',
-//       points: [
-//         ['5/1/2024', 29.9],
-//         ['5/2/2024', 97.5],
-//       ]
-//     } ];
-
-//access all data
-function updateChart(options){
-   JSC.chart('chart-container', { 
-  debug: true, 
-  type: 'line spline', 
-  defaultCultureName: "zh-CN",
-  legend_visible: false, 
-  defaultPoint_label_autoHide:false,
-  chartArea: {
-                fill: '#BEBFC1'  // Set your desired background color here
-            },
-            outline: {         // Set your desired frame (border) color and style here
-                    color: '#ffffff',  // Frame (border) color
-                    width: 10          // Frame (border) width in pixels
-                }
-              ,
-  xAxis: { 
-    crosshair_enabled: true, 
-    monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-    scale: { 
-      type: 'time',
-      advanced: {
-                    rangeSelector: {
-                        enabled: true,
-                        from: '2023-12-29',
-                        to: "2024-05-13"
-                    }
-                } } 
-    }, 
-  yAxis: {
-    label_text: '价格 (¥)',
-    orientation: 'opposite',
-    formatString: 'a'
-  },
-  defaultSeries: {
-    firstPoint_label_text: '<b>%seriesName</b>',
-    defaultPoint_marker: { 
-      type: 'circle', 
-      size: 8, 
-      fill: 'white', 
-      outline: { width: 2, color: 'currentColor' } 
-    } 
-  }, 
-  title_label_text: `
-  价格从${new Date(currentStartDate).toISOString().split('T')[0]}到${new Date(currentEndDate).toISOString().split('T')[0]}`,
-  series: options,
- 
-
-}); 
-}
-
-let allData=[];
-let series_high = [];
-  //aggregate data
-  let aggregatedData = {};
-  function aggregateData(fetched){
-    fetched.reverse().forEach(item =>{
-    const { report_time, market, highest_price } = item;
-    if(!aggregatedData[market]){
-      aggregatedData[market] = []
-    }
-      aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
-  });
-  }
-  console.log("agg",aggregatedData)
-  //formt series to add to chart
- function formatData(){
-  for (const market in aggregatedData) {
-    let filterArray = series_high.filter(item=> item.name === market)
-    if(filterArray.length > 0){
-      filterArray[0].points = aggregatedData[market];
-    }else{
-      series_high.push({
-            name: market,
-            points: aggregatedData[market]
-        });
-    };
-    }
- }
- const dateSlider = document.getElementById('dateSlider');
- let currentStartDate = new Date().getTime();
- let currentEndDate = new Date().getTime();
-//  let startSlider = new Date().getTime()
-   console.log("ser",series_high)
-   //this fetch is to get the pages cout
-fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-12-19&end_date=2024-05-15")
-.then(response => response.json())
-.then(async (dataInit)=>{
-  if(dataInit.message==="success"){
-    console.log("succses", dataInit.data.last_page)
-    //concat one data
-    let pageCount = dataInit.data.last_page;
-    let counter = 0;
-  while(pageCount > 0){
-    const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`)
-   const data = await response.json()
-    console.log(
-      `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`,
-       data
-       );
-       //add fetched to all ?? No need !
-      aggregateData(data.data.data);
-      formatData()
-      
-      //update slider
-      let newRangeMin = series_high[1].points[series_high[1].points.length - 1][0];
-      console.log("new range min",newRangeMin)
-      //jscharting format MM-DD-YYYY NEED TO CONVERT TO nouislider format YYYY-MM-DD
-      const [month, day, year] = newRangeMin.split('/');
-      console.log(newRangeMin, "covertto", `${year}-${month}-${day}`);
-      let newMinValue =  new Date(`${year}-${month}-${day}`).getTime()
-      dateSlider.noUiSlider.updateOptions({
-         start: [ currentStartDate, currentEndDate],
-    connect: true,
-    tooltips: [true, true],
-      range: {
-        'min': new Date(newMinValue).getTime(),
-       'max': new Date().getTime()
-     },
-     format: {
-      to: function(value) {
-                    // console.log("from to value", value)
-                    const date = new Date(value);
-                    // console.log("from to", date)
-                    return date.toISOString().split('T')[0];
-                },
-      from: function(value) {
-                    return value;
-                }
-    }, 
-     }, false)
-      if(counter===1){
-        
-        console.log("series_height11", series_high);
-        let startReportTime = series_high[1].points[series_high[1].points.length - 1][0]
-        console.log("first chart start date",startReportTime)
-        const [month, day, year] = startReportTime.split('/');
-        console.log("first chart start date",`${year}-${month}-${day}`);
-        currentStartDate = new Date(`${year}-${month}-${day}`).getTime()
-
-        dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
-
-        updateChart(series_high)
-        dateSlider.classList.remove("hidden");
-        dateSlider.classList.add("shown")
-       }
-      pageCount--
-      counter++
-  }
-  console.log("final agg",aggregatedData );
-  console.log("final series", series_high)
-
-
- }});
-
-//init the slider
-
-noUiSlider.create(dateSlider, {
-    start: [ new Date().getTime(), new Date().getTime()],
-    connect: true,
-    tooltips: [true, true],
-    range: {
-         //'min': new Date('2023-12-19').getTime(),
-        'min': currentStartDate,
-        'max': currentEndDate
-    },
-    format: {
-      to: function(value) {
-                    // console.log("from to value", value)
-                    const date = new Date(value);
-                    // console.log("from to", date)
-                    return date.toISOString().split('T')[0];
-                },
-      from: function(value) {
-                    return value;
-                }
-    },
-    create: function () {
-                const handles = slider.querySelectorAll('.noUi-handle');
-                handles.forEach(function(handle) {
-                    handle.style.display = 'none';
-                });
-
-                const connect = slider.querySelector('.noUi-origin');
-                const customHandle = document.createElement('div');
-                customHandle.classList.add('custom-handle');
-                connect.appendChild(customHandle);
-            }
-});
-dateSlider.noUiSlider.on('change', function(values, handle) {
-  currentStartDate = new Date(values[0]).getTime();
-  currentEndDate = new Date(values[1]).getTime();
-    //get the data of that specific time
-    //['2024-04-11', '2024-05-15']
-    const startDate = new Date(values[0]);
-const endDate = new Date(values[1]);
-const filteredData = series_high.map(market => {
-    return {
-        name: market.name,
-        points: market.points.filter(point => {
-            const pointDate = new Date(point[0]);
-            return pointDate >= startDate && pointDate <= endDate;
-        })
-    };
-});
-updateChart(filteredData)
-
-});
-
-
-
         var nodesFruits =JSON.parse(`<%-JSON.stringify(nodesFruits)%>`);
         var nodesVegetables =JSON.parse(`<%-JSON.stringify(nodesVegetables)%>`);
         var nodesOthers =JSON.parse(`<%-JSON.stringify(nodesOthers)%>`);

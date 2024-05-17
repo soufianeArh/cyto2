@@ -404,16 +404,14 @@ i#direction:hover {
   color: beige;
 }
 #chart-container{
-  position: absolute;
-  right: 0;
-  bottom:100%;
-  background-color: #495065c4 ;
+  width: 100% !important;
+  min-width:300px !important
+  /* background-color: #495065c4 ; */
 }
 #dateSlider {
   margin-top: 40px;
-  margin-right: 40px;
-  margin-left: 40px;
-  width: 100%;height: 4px;
+ margin-right: 2rem;
+  width: 80%;height: 4px;
  
 }
 .hidden{
@@ -492,7 +490,33 @@ i#direction:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow for better visibility */
 }
 
-
+.chart-ctn{
+  background-color: rgba(64, 67, 94, 0.736);
+  background-image: url('/images/loading.gif') ;
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  position: absolute;
+  left: 10%;
+  right:10%;
+  top:4rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+}
+.no-price-popup{
+  position: absolute;
+  left:30%;
+  right:30%;
+  top:4rem;
+  background-color: rgba(64, 67, 94, 0.736);
+  padding: 1rem;
+  display: flex;
+  justify-content:center
+}
 /* #timeSlider {
   margin: 20px;
   width: 800px;

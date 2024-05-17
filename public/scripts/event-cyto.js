@@ -201,9 +201,33 @@ cy.on("click", 'node[type = "names"]', function (evt) {
 
   console.log("clicked " + node.id() + node.data().label);
 });
+// cy.on("click", 'node[type = "varieties"]', function (evt) {
+//   var node = evt.target;
+//   var label = node.data().label;
+//   var category = node.data().category;
+//   if (category === "fruits") {
+//     type = "水果";
+//   } else if (category === "vegetables") {
+//     type = "蔬菜";
+//   } else if (category === "others") {
+//     type = "粮油米面";
+//   }
+//   fetch(
+//     `https://iot-admin.meseeagro.com/plant_big_data/api/v1/search?plant_name=${label}`
+//   )
+//     .then((res) => res.json())
+//     .then((data) => {
+//       console.log(data);
+//       popupContent(type, label, "品种", data.data);
+//     })
+//     .catch((err) => console.log("error by catch", err));
+
+//   console.log("clicked " + node.id() + node.data().label);
+// });
 cy.on("click", 'node[type = "varieties"]', function (evt) {
   var node = evt.target;
   var label = node.data().label;
+  selectedLabel = label;
   var category = node.data().category;
   if (category === "fruits") {
     type = "水果";
@@ -213,12 +237,66 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
     type = "粮油米面";
   }
   fetch(
-    `https://iot-admin.meseeagro.com/plant_big_data/api/v1/search?plant_name=${label}`
+    `http://price.meseeagro.com/api/v1/prices?page=1&name=${label}&date=2023-12-19&end_date=2024-05-15`
   )
     .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      popupContent(type, label, "品种", data.data);
+    .then(async (dataInit) => {
+      //show to chart container
+      
+     if(dataInit.message === "信息未收录"){
+      priceMessage.innerHTML = `<strong>${label}</strong>的价格未登记`
+      pricePopup.classList.remove("hidden");
+      setTimeout(()=>{
+        pricePopup.classList.add("hidden")
+      },3000)
+      console.log("no data to show- not recorred ")
+     }
+     else if(dataInit.data.data.length === 0){
+      priceMessage.innerHTML = `<strong>${label}</strong>的价格已登记，但无可用数据`
+      pricePopup.classList.remove("hidden");
+      setTimeout(()=>{
+        pricePopup.classList.add("hidden")
+      },10000)
+      console.log("recoreded but no price yet")
+     }
+     else if (dataInit.data.data.length > 0) {
+      chartContainer.classList.remove("hidden");
+      console.log("i should ne be parsed the fuck up")
+      initSlider()
+      let pageCount = dataInit.data.last_page;
+      let counter = 0;
+      while(pageCount > 0){
+        const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=2024-05-15`)
+       const data = await response.json()
+        console.log(
+          `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`,
+           data
+           );
+           //add fetched to all ?? No need !
+          aggregateData(data.data.data);
+          console.log("agg",aggregatedData)
+          formatData();
+          updateSlider()
+          
+          
+          if(counter===1){
+            console.log("series_height11", series_high);
+            let startReportTime = series_high[1].points[series_high[1].points.length - 1][0]
+            console.log("first chart start date",startReportTime)
+            const [month, day, year] = startReportTime.split('/');
+            console.log("first chart start date",`${year}-${month}-${day}`);
+            currentStartDate = new Date(`${year}-${month}-${day}`).getTime()
+            dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
+            updateChart(series_high, selectedLabel)
+            dateSlider.classList.remove("hidden");
+           }
+          pageCount--
+          counter++
+      }
+      console.log("final agg",aggregatedData );
+      console.log("final series", series_high)
+     }
+  
     })
     .catch((err) => console.log("error by catch", err));
 
