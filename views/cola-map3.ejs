@@ -347,7 +347,7 @@ fetch("http://price.meseeagro.com/api/v1/prices?page=1&name=大白菜&date=2023-
       from: function(value) {
                     return value;
                 }
-    }
+    }, 
      }, false)
       if(counter===1){
         
@@ -394,7 +394,18 @@ noUiSlider.create(dateSlider, {
       from: function(value) {
                     return value;
                 }
-    }
+    },
+    create: function () {
+                const handles = slider.querySelectorAll('.noUi-handle');
+                handles.forEach(function(handle) {
+                    handle.style.display = 'none';
+                });
+
+                const connect = slider.querySelector('.noUi-origin');
+                const customHandle = document.createElement('div');
+                customHandle.classList.add('custom-handle');
+                connect.appendChild(customHandle);
+            }
 });
 dateSlider.noUiSlider.on('change', function(values, handle) {
   currentStartDate = new Date(values[0]).getTime();
