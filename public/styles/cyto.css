@@ -405,7 +405,7 @@ i#direction:hover {
 }
 #chart-container{
   width: 100% !important;
-  min-width:300px !important
+  height:70% !important;
   /* background-color: #495065c4 ; */
 }
 #dateSlider {
@@ -499,7 +499,8 @@ i#direction:hover {
   position: absolute;
   left: 10%;
   right:10%;
-  top:4rem;
+  top:10%;
+  bottom:10%;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -517,6 +518,7 @@ i#direction:hover {
   display: flex;
   justify-content:center
 }
+
 /* #timeSlider {
   margin: 20px;
   width: 800px;

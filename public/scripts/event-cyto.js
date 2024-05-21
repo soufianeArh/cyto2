@@ -228,6 +228,7 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
   var node = evt.target;
   var label = node.data().label;
   selectedLabel = label;
+  var currentDate = new Date().toISOString().split('T')[0]
   var category = node.data().category;
   if (category === "fruits") {
     type = "水果";
@@ -237,7 +238,7 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
     type = "粮油米面";
   }
   fetch(
-    `http://price.meseeagro.com/api/v1/prices?page=1&name=${label}&date=2023-12-19&end_date=2024-05-15`
+    `http://price.meseeagro.com/api/v1/prices?page=1&name=${label}&date=2023-12-19&end_date=${currentDate}`
   )
     .then((res) => res.json())
     .then(async (dataInit) => {
@@ -266,10 +267,10 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
       let pageCount = dataInit.data.last_page;
       let counter = 0;
       while(pageCount > 0){
-        const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=2024-05-15`)
+        const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=${currentDate}`)
        const data = await response.json()
         console.log(
-          `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=2024-05-15`,
+          `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=${currentDate}`,
            data
            );
            //add fetched to all ?? No need !

@@ -220,7 +220,9 @@ function formatData(){
     }else{
       series_high.push({
             name: market.substring(0, market.length - 4),
-            points: aggregatedData[market]
+            points: aggregatedData[market],
+            spine_label_visible: false,
+            spine_label_text: ''
         });
     };
     }
@@ -256,12 +258,20 @@ tooltips: [true, true],
  }
 
  function updateChart(options, name){
-  JSC.chart('chart-container', { 
- debug: true, 
+  let chart = JSC.chart('chart-container', { 
+    legend_position: 'top',
+    legend:{
+      template: "%icon %name",    },
+ debug: false, 
  type: 'line spline', 
  defaultCultureName: "zh-CN",
- legend_visible: false, 
- defaultPoint_label_autoHide:false,
+ legend_visible: true, 
+//  defaultPoint_label_hide:true,
+
+// defaultAxis: {
+//   defaultTick_gridLine_visible: false,
+//   alternateGridFill: "none"
+// },
  chartArea: {
                fill: '#BEBFC1'  // Set your desired background color here
            },
@@ -279,33 +289,53 @@ tooltips: [true, true],
                    rangeSelector: {
                        enabled: true,
                        from: '2023-12-29',
-                       to: "2024-05-13"
+                       to: "2024-05-21"
                    }
                } } 
    }, 
- yAxis: {
+ yAxis: [{
    label_text: '价格 (¥)',
    orientation: 'opposite',
    formatString: 'a'
  },
+ {
+  //Define a secondary axis on the right to host lastPoint ticks.
+  id: "secondY",
+  defaultTick_enabled: false,
+  scale_syncWith: "mainY",
+  orientation: "right"
+}
+],
  defaultSeries: {
     firstPoint_label_text: '<b>%seriesName</b>',
- 
-   defaultPoint_marker: { 
-     type: 'circle', 
-     size: 8, 
-     fill: 'white', 
-     outline: { width: 2, color: 'currentColor' } 
-   } 
+    defaultPoint_marker: {
+     type: 'circle',
+     size: 8,
+     fill: 'white',
+     outline: { width: 2, color: 'currentColor' }
+   }
  }, 
  title_label_text: `
  ${name}: 价格从${new Date(currentStartDate).toISOString().split('T')[0]}到${new Date(currentEndDate).toISOString().split('T')[0]}`,
  series: options,
- legend: {
-  position: 'inside'
-}
+ defaultSeries: {
+  defaultPoint_marker: { visible: false, type: "circle" },
+  firstPoint: { marker_visible: true, label_text: "%yValue" },
+  lastPoint: {
+    //Add axis ticks for the last point of each series.
+    yAxisTick: {
+      axisId: "secondY",
+      label_text: "%icon %seriesName"
+    },
+    marker_visible: true,
+    label_text: "%yValue"
+  },
+  
+},
+
 
 }); 
+
 }
 
 function initSlider(){
