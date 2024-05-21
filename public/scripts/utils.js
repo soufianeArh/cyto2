@@ -214,12 +214,12 @@ function aggregateData(fetched){
 }
 function formatData(){
   for (const market in aggregatedData) {
-    let filterArray = series_high.filter(item=> item.name === market)
+    let filterArray = series_high.filter(item=> item.name === market.substring(0, market.length - 4))
     if(filterArray.length > 0){
       filterArray[0].points = aggregatedData[market];
     }else{
       series_high.push({
-            name: market,
+            name: market.substring(0, market.length - 4),
             points: aggregatedData[market]
         });
     };
@@ -289,7 +289,8 @@ tooltips: [true, true],
    formatString: 'a'
  },
  defaultSeries: {
-   firstPoint_label_text: '<b>%seriesName</b>',
+    firstPoint_label_text: '<b>%seriesName</b>',
+ 
    defaultPoint_marker: { 
      type: 'circle', 
      size: 8, 
@@ -300,7 +301,9 @@ tooltips: [true, true],
  title_label_text: `
  ${name}: 价格从${new Date(currentStartDate).toISOString().split('T')[0]}到${new Date(currentEndDate).toISOString().split('T')[0]}`,
  series: options,
-
+ legend: {
+  position: 'inside'
+}
 
 }); 
 }
