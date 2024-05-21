@@ -227,7 +227,14 @@ cy.on("click", 'node[type = "names"]', function (evt) {
 cy.on("click", 'node[type = "varieties"]', function (evt) {
   var node = evt.target;
   var label = node.data().label;
+  //in case of realod ==> new date 
+   currentStartDate = new Date().getTime();
+   currentEndDate = new Date().getTime();
+  aggregatedData = {};
+  series_high = [];
+   //in case of realod ==> new date 
   selectedLabel = label;
+  console.log(label, selectedLabel);
   var currentDate = new Date().toISOString().split('T')[0]
   var category = node.data().category;
   if (category === "fruits") {
@@ -243,7 +250,8 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
     .then((res) => res.json())
     .then(async (dataInit) => {
       //show to chart container
-      
+      dataChartContainer.classList.add("hidden")
+      dateSlider.classList.add("hidden");
      if(dataInit.message === "信息未收录"){
       priceMessage.innerHTML = `<strong>${label}</strong>的价格未登记`
       pricePopup.classList.remove("hidden");
@@ -263,7 +271,9 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
      else if (dataInit.data.data.length > 0) {
       chartContainer.classList.remove("hidden");
       console.log("i should ne be parsed the fuck up")
-      initSlider()
+      if(!dateSlider.noUiSlider){
+        initSlider()
+      } 
       let pageCount = dataInit.data.last_page;
       let counter = 0;
       while(pageCount > 0){
@@ -288,7 +298,9 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
             console.log("first chart start date",`${year}-${month}-${day}`);
             currentStartDate = new Date(`${year}-${month}-${day}`).getTime()
             dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
-            updateChart(series_high, selectedLabel)
+            updateChart(series_high, selectedLabel);
+            //in case of realod
+            dataChartContainer.classList.remove("hidden")
             dateSlider.classList.remove("hidden");
            }
           pageCount--

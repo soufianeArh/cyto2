@@ -39,6 +39,7 @@ const compassLeft = document.getElementById("compass-left")
 const compassRight = document.getElementById("compass-right");
 
 const chartContainer = document.getElementById("chart-ctn")
+const dataChartContainer = document.getElementById("chart-container")
 const dateSlider = document.getElementById('dateSlider');
 const pricePopup = document.getElementById('no-price-popup')
 const priceMessage = document.getElementById('no-price-msg');
