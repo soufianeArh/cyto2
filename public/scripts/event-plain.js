@@ -1,4 +1,9 @@
-
+headerInput2.addEventListener("keypress",(event)=>{
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    headerSearch2.click();
+ }
+ })
     headerSearch2.addEventListener("click", () => {
       console.log("headerSearch2 clicked", headerInput2.value);
       if (nodesFruits.varietiesData[headerInput2.value]) {
@@ -11,6 +16,12 @@
         displayError();
       }
     });
+    headerInput.addEventListener("keypress",(event)=>{
+      if(event.key = "Enter"){
+        event.preventDefault();
+        headerSearch.click()
+      }
+    })
     headerSearch.addEventListener("click", () => {
       console.log("headerSearch2 clicked", headerInput2.value);
       if (nodesFruits.namesData[headerInput.value]) {
