@@ -503,8 +503,8 @@ i#direction:hover {
   bottom:10%;
   padding: 2rem;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: column !important;
+  justify-content: center !important;
   align-items: center;
   border-radius: 8px;
 }

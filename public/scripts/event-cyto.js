@@ -298,10 +298,13 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
             console.log("first chart start date",`${year}-${month}-${day}`);
             currentStartDate = new Date(`${year}-${month}-${day}`).getTime()
             dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
+             //in case of realod
+             dateSlider.classList.remove('hidden');
+             dataChartContainer.classList.remove('hidden');
             updateChart(series_high, selectedLabel);
-            //in case of realod
-            dataChartContainer.classList.remove("hidden")
-            dateSlider.classList.remove("hidden");
+           
+        
+          
            }
           pageCount--
           counter++

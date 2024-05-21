@@ -266,12 +266,15 @@ tooltips: [true, true],
  type: 'line spline', 
  defaultCultureName: "zh-CN",
  legend_visible: true, 
+ fill:"#BEBFC1",
+ chartArea_fill: "red",
 //  defaultPoint_label_hide:true,
 
 // defaultAxis: {
 //   defaultTick_gridLine_visible: false,
 //   alternateGridFill: "none"
 // },
+// title_fill: ["#FF0000", "darken", "lightenMore", 90],//works
  chartArea: {
                fill: '#BEBFC1'  // Set your desired background color here
            },
