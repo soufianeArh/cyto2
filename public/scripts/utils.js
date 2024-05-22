@@ -239,8 +239,8 @@ function formatData(counter){
   console.log("new range min",newRangeMin)
   //jscharting format MM-DD-YYYY NEED TO CONVERT TO nouislider format YYYY-MM-DD
   const [month, day, year] = newRangeMin.split('/');
-  console.log(newRangeMin, "covertto", `${year}-${month}-${day}`);
-  let newMinValue =  new Date(`${year}-${month}-${day}`).getTime()
+  console.log(newRangeMin, "covertto", `${year}-${month}-${day}T00:00:00Z`);
+  let newMinValue =  new Date(`${year}-${month}-${day}T00:00:00Z`).getTime()
   dateSlider.noUiSlider.updateOptions({
      start: [ currentStartDate, currentEndDate],
 connect: true,

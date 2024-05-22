@@ -305,8 +305,8 @@ cy.on("click", 'node[type = "varieties"]', async function (evt) {
               series_high[1].points[series_high[1].points.length - 1][0];
             console.log("first chart start date", startReportTime);
             const [month, day, year] = startReportTime.split("/");
-            console.log("first chart start date", `${year}-${month}-${day}`);
-            currentStartDate = new Date(`${year}-${month}-${day}`).getTime();
+            currentStartDate = new Date(`${year}-${month}-${day}T00:00:00Z`).getTime();
+            console.log("first chart start date", `${year}-${month}-${day}`, currentStartDate);
             dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
             //in case of realod
             dateSlider.classList.remove("hidden");
