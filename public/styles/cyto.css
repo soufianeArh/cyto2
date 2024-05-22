@@ -261,9 +261,9 @@ justify-content: center;
 .header2-ctn {
   display: flex;
   justify-content: flex-end;
-  position: absolute;
+  position: absolute !important;
   right: 0;
-  left: 0;
+ 
 }
 .header-item2 {
   background-color: transparent;

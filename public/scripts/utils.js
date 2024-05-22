@@ -268,6 +268,7 @@ tooltips: [true, true],
 
  function updateChart(options, name){
   let chart = JSC.chart('chart-container', { 
+    license: null,
     legend_position: 'top',
     legend:{
       template: "%icon %name",    },
