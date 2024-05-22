@@ -85,6 +85,7 @@ headerInput2.addEventListener("keypress",(event)=>{
 
     removeChart.addEventListener("click",()=>{
       chartContainer.classList.add("hidden")
+      stopFetchingData()
     })
     removePrice.addEventListener("click",()=>{
       pricePopup.classList.add("hidden")

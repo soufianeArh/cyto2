@@ -4,11 +4,10 @@
 //   // Additional actions you want to perform when layout stops
 // });
 
-
 ///////////////////change layout/////////////
 
 colaLayout.addEventListener("click", () => {
-  cy.nodes(`[type="linking"]`).remove()
+  cy.nodes(`[type="linking"]`).remove();
   cy.edges(`[type="linking"]`).remove();
   cy.add(linksNodes);
   cy.nodes().unlock();
@@ -224,18 +223,36 @@ cy.on("click", 'node[type = "names"]', function (evt) {
 
 //   console.log("clicked " + node.id() + node.data().label);
 // });
-cy.on("click", 'node[type = "varieties"]', function (evt) {
+
+let isRunning = false;
+let shouldStop = false;
+
+// let intervalId = null;
+// function stopLoop() {
+//   if (intervalId) {
+//     clearInterval(intervalId);
+//     intervalId = null;
+//   }
+// }
+let intervalId = null;
+cy.on("click", 'node[type = "varieties"]', async function (evt) {
+  if (isRunning) {
+    console.log("stopped success");
+    shouldStop = true; // Signal the current loop to stop
+    await new Promise((resolve) => setTimeout(resolve, 100)); // Allow some time for the loop to stop
+  }
+  isRunning = true;
+  shouldStop = false;
+
   var node = evt.target;
   var label = node.data().label;
-  //in case of realod ==> new date 
-   currentStartDate = new Date().getTime();
-   currentEndDate = new Date().getTime();
-  aggregatedData = {};
-  series_high = [];
-   //in case of realod ==> new date 
   selectedLabel = label;
+  //in case of realod ==> new date
+  currentStartDate = new Date().getTime();
+  currentEndDate = new Date().getTime();
+  //in case of realod ==> new date
   console.log(label, selectedLabel);
-  var currentDate = new Date().toISOString().split('T')[0]
+
   var category = node.data().category;
   if (category === "fruits") {
     type = "水果";
@@ -245,80 +262,134 @@ cy.on("click", 'node[type = "varieties"]', function (evt) {
     type = "粮油米面";
   }
   fetch(
-    `http://price.meseeagro.com/api/v1/prices?page=1&name=${label}&date=2023-12-19&end_date=${currentDate}`
+    `https://price.meseeagro.com/api/v1/prices?page=1&name=${label}&date=2023-12-19&end_date=${currentDate}`
   )
     .then((res) => res.json())
     .then(async (dataInit) => {
       //show to chart container
-      dataChartContainer.classList.add("hidden")
+      dataChartContainer.classList.add("hidden");
       dateSlider.classList.add("hidden");
-     if(dataInit.message === "信息未收录"){
-      priceMessage.innerHTML = `<strong>${label}</strong>的价格未登记`
-      pricePopup.classList.remove("hidden");
-      setTimeout(()=>{
-        pricePopup.classList.add("hidden")
-      },3000)
-      console.log("no data to show- not recorred ")
-     }
-     else if(dataInit.data.data.length === 0){
-      priceMessage.innerHTML = `<strong>${label}</strong>的价格已登记，但无可用数据`
-      pricePopup.classList.remove("hidden");
-      setTimeout(()=>{
-        pricePopup.classList.add("hidden")
-      },10000)
-      console.log("recoreded but no price yet")
-     }
-     else if (dataInit.data.data.length > 0) {
-      chartContainer.classList.remove("hidden");
-      console.log("i should ne be parsed the fuck up")
-      if(!dateSlider.noUiSlider){
-        initSlider()
-      } 
-      let pageCount = dataInit.data.last_page;
-      let counter = 0;
-      while(pageCount > 0){
-        const response = await fetch(`http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=${currentDate}`)
-       const data = await response.json()
-        console.log(
-          `http://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=${currentDate}`,
-           data
-           );
-           //add fetched to all ?? No need !
-          aggregateData(data.data.data);
-          console.log("agg",aggregatedData)
-          formatData();
-          updateSlider()
-          
-          
-          if(counter===1){
+      if (dataInit.message === "信息未收录") {
+        priceMessage.innerHTML = `<strong>${label}</strong>的价格未登记`;
+        pricePopup.classList.remove("hidden");
+        setTimeout(() => {
+          pricePopup.classList.add("hidden");
+        }, 3000);
+        console.log("no data to show- not recorred ");
+      } else if (dataInit.data.data.length === 0) {
+        priceMessage.innerHTML = `<strong>${label}</strong>的价格已登记，但无可用数据`;
+        pricePopup.classList.remove("hidden");
+        setTimeout(() => {
+          pricePopup.classList.add("hidden");
+        }, 10000);
+        console.log("recoreded but no price yet");
+      } else if (dataInit.data.data.length > 0) {
+        chartContainer.classList.remove("hidden");
+        console.log("i should ne be parsed the fuck up");
+        if (!dateSlider.noUiSlider) {
+          initSlider();
+        }
+        let pageCount = dataInit.data.last_page;
+        let counter = 0;
+        stopFetchingData(); 
+        // aggregatedData = {};
+        // series_high = [];
+        intervalId = setInterval(() => {
+          if (pageCount > 0) {
+            fetchData(pageCount, label, counter);
+            console.log("fetch/////////////", pageCount, label);
+          }
+          if (counter === 2) {
             console.log("series_height11", series_high);
-            let startReportTime = series_high[1].points[series_high[1].points.length - 1][0]
-            console.log("first chart start date",startReportTime)
-            const [month, day, year] = startReportTime.split('/');
-            console.log("first chart start date",`${year}-${month}-${day}`);
-            currentStartDate = new Date(`${year}-${month}-${day}`).getTime()
+            let startReportTime =
+              series_high[1].points[series_high[1].points.length - 1][0];
+            console.log("first chart start date", startReportTime);
+            const [month, day, year] = startReportTime.split("/");
+            console.log("first chart start date", `${year}-${month}-${day}`);
+            currentStartDate = new Date(`${year}-${month}-${day}`).getTime();
             dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
-             //in case of realod
-             dateSlider.classList.remove('hidden');
-             dataChartContainer.classList.remove('hidden');
+            //in case of realod
+            dateSlider.classList.remove("hidden");
+            dataChartContainer.classList.remove("hidden");
             updateChart(series_high, selectedLabel);
-           
-        
-          
-           }
-          pageCount--
-          counter++
+          }
+          pageCount--;
+          counter++;
+        }, 1000);
       }
-      console.log("final agg",aggregatedData );
-      console.log("final series", series_high)
-     }
-  
+      console.log("final agg", aggregatedData);
+      console.log("final series", series_high);
+      // }
     })
     .catch((err) => console.log("error by catch", err));
 
   console.log("clicked " + node.id() + node.data().label);
 });
 
+async function fetchData(pageCount, label, counter) {
+  console.log("fetch++++++++++++");
+  console.log("agg+", aggregatedData);
+  console.log("series", series_high);
+  const response = await fetch(
+    `https://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=${currentDate}`
+  );
+  const data = await response.json();
+  console.log(
+    `https://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=${currentDate}`,
+    data
+  );
+  //add fetched to all ?? No need !
+  aggregateData(data.data.data, counter);
+  console.log("agg", aggregatedData);
+  formatData(counter);
+  updateSlider();
+}
+function stopFetchingData() {
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+    // aggregatedData = {};
+    // series_high = []; changes not affect
+  }
+}
+
+async function loadData(label, pageCount, counter, controller) {
+  while (pageCount > 0) {
+    if (shouldStop) {
+      console.log(`Loop stopped`);
+      return;
+    }
+    const response = await fetch(
+      `https://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=${label}&date=2023-12-19&end_date=${currentDate}`
+    );
+    const data = await response.json();
+    console.log(
+      `https://price.meseeagro.com/api/v1/prices?page=${pageCount}&name=大白菜&date=2023-12-19&end_date=${currentDate}`,
+      data
+    );
+    //add fetched to all ?? No need !
+    aggregateData(data.data.data);
+    console.log("agg", aggregatedData);
+    formatData();
+    updateSlider();
+    if (counter === 1) {
+      console.log("series_height11", series_high);
+      let startReportTime =
+        series_high[1].points[series_high[1].points.length - 1][0];
+      console.log("first chart start date", startReportTime);
+      const [month, day, year] = startReportTime.split("/");
+      console.log("first chart start date", `${year}-${month}-${day}`);
+      currentStartDate = new Date(`${year}-${month}-${day}`).getTime();
+      dateSlider.noUiSlider.set([currentStartDate, currentEndDate]);
+      //in case of realod
+      dateSlider.classList.remove("hidden");
+      dataChartContainer.classList.remove("hidden");
+      updateChart(series_high, selectedLabel);
+    }
+    pageCount--;
+    counter++;
+  }
+}
 cy.on("click", "node", function (event) {
   var clickedNode = event.target;
 
@@ -365,4 +436,3 @@ centerBtn.addEventListener("click", () => {
   cy.center();
   cy.zoom(1.2);
 });
-

@@ -19,4 +19,5 @@ let aggregatedData = {};
 let series_high = [];
 let currentStartDate = new Date().getTime();
 let currentEndDate = new Date().getTime();
+var currentDate = new Date().toISOString().split('T')[0]
 let selectedLabel = ""

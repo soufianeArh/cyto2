@@ -203,7 +203,10 @@ function popupContent(type, label, typeIndex, data) {
   dragDiv.classList.remove("hidden");
 }
 
-function aggregateData(fetched){
+function aggregateData(fetched, counter){
+  if(counter===0){
+    aggregatedData = {};
+  }
   fetched.reverse().forEach(item =>{
   const { report_time, market, highest_price } = item;
   if(!aggregatedData[market]){
@@ -212,7 +215,10 @@ function aggregateData(fetched){
     aggregatedData[market].push([new Date(report_time).toLocaleDateString(), parseFloat(highest_price)])
 });
 }
-function formatData(){
+function formatData(counter){
+  if(counter===0){
+    series_high = [];
+  }
   for (const market in aggregatedData) {
     let filterArray = series_high.filter(item=> item.name === market.substring(0, market.length - 4))
     if(filterArray.length > 0){
