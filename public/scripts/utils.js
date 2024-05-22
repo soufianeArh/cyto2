@@ -238,7 +238,10 @@ function formatData(counter){
   let newRangeMin = series_high[1].points[series_high[1].points.length - 1][0];
   console.log("new range min",newRangeMin)
   //jscharting format MM-DD-YYYY NEED TO CONVERT TO nouislider format YYYY-MM-DD
-  const [month, day, year] = newRangeMin.split('/');
+  let [month, day, year] = newRangeMin.split('/');
+  if(month.length===1){month = `0${month}`};
+  if(day.length===1){month = `0${day}`}
+
   console.log(newRangeMin, "covertto", `${year}-${month}-${day}T00:00:00Z`);
   let newMinValue =  new Date(`${year}-${month}-${day}T00:00:00Z`).getTime()
   dateSlider.noUiSlider.updateOptions({
@@ -246,14 +249,14 @@ function formatData(counter){
 connect: true,
 tooltips: [true, true],
   range: {
-    'min': new Date(newMinValue).getTime(),
+    'min': newMinValue,
    'max': new Date().getTime()
  },
  format: {
   to: function(value) {
-                // console.log("from to value", value)
+                console.log("from to value", value)
                 const date = new Date(value);
-                // console.log("from to", date)
+                 console.log("from to", date)
                 return date.toISOString().split('T')[0];
             },
   from: function(value) {
