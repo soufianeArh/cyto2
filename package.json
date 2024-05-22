@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy-cytoscape-cola": "cp ./node_modules/cytoscape-cola/cytoscape-cola.js ./public/scripts/"
   },
   "author": "",
   "license": "ISC",
@@ -21,15 +22,22 @@
     "cytoscape-d3-force": "^1.1.4",
     "cytoscape-dagre": "^2.5.0",
     "cytoscape-html-node": "^2.2.0",
+    "cytoscape-klay": "^3.1.4",
     "cytoscape-node-html-label": "^1.2.2",
+    "cytoscape-tidytree": "^0.1.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.18.0",
+    "flatpickr": "^4.6.13",
+    "jscharting": "^3.4.0",
+    "klayjs": "^0.4.1",
+    "nouislider": "^15.7.2",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "passport-wechat": "^2.0.4",
-    "pg": "^8.11.3"
+    "pg": "^8.11.3",
+    "webcola": "^3.4.0"
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4"
