@@ -241,7 +241,7 @@ app.get("/cola-map2", (req, res) => {
 app.get("/", async (req, res) => {
   console.log(req.body);
 
-  if (true) {
+  if (req.isAuthenticated()) {
     try {
       const fruits = await db.query(
         "SELECT * FROM food WHERE category='水果' "
@@ -395,7 +395,7 @@ app.get("/", async (req, res) => {
         nodesFruits,
         nodesVegetables,
         nodesOthers,
-        // username: req.user.email,
+        username: req.user.email,
         cise,
         d3Force,
         dagre,
